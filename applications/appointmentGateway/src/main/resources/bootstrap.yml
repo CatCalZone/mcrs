@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: appointmentGateway
+  cloud:
+    config:
+      enabled: false

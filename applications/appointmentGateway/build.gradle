@@ -1,0 +1,88 @@
+ext {
+    groovyVersion = '2.4.1'
+    slf4jVersion = '1.7.10'
+    logbackVersion = '1.1.2'
+    reactorVersion = '2.0.1.BUILD-SNAPSHOT'
+    springVersion = '4.1.5.RELEASE'
+    springBootVersion = '1.2.1.RELEASE'
+    springCloudVersion = '1.0.0.RELEASE'
+    spockVersion = '0.7-groovy-2.0'
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+}
+
+
+
+buildscript {
+    repositories {
+        maven { url "https://repo.spring.io/libs-snapshot" }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.1.10.RELEASE")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'spring-boot'
+
+configurations.all {
+    resolutionStrategy {
+        eachDependency {
+            if (it.requested.group == 'org.apache.tomcat.embed') {
+                it.useVersion '8.0.20'
+            }
+        }
+    }
+}
+
+jar {
+    baseName = 'appointmentGateway'
+    version =  '0.1.0'
+}
+
+repositories {
+    mavenCentral()
+    maven { url "https://repo.spring.io/libs-snapshot" }
+}
+
+dependencies {
+    // Groovy
+    compile "org.codehaus.groovy:groovy:$groovyVersion"
+
+    // Spring Boot
+    compile "org.springframework.boot:spring-boot-starter:$springBootVersion"
+    compile("org.springframework.boot:spring-boot-starter-web:$springBootVersion")
+
+    // Spring Cloud
+    compile "org.springframework.cloud:spring-cloud-aws-context:$springCloudVersion"
+    compile "org.springframework.cloud:spring-cloud-aws-messaging:$springCloudVersion"
+    compile "org.springframework.cloud:spring-cloud-starter-eureka:$springCloudVersion"
+
+    // Spring Framework
+    compile "org.springframework:spring-core:$springVersion",
+            "org.springframework:spring-beans:$springVersion",
+            "org.springframework:spring-context:$springVersion",
+            "org.springframework:spring-context-support:$springVersion",
+            "org.springframework:spring-tx:$springVersion"
+
+    // Reactor
+    compile "io.projectreactor.spring:reactor-spring-context:$reactorVersion",
+            "io.projectreactor:reactor-groovy:$reactorVersion"
+    compile "io.projectreactor:reactor-stream:$reactorVersion",
+            "io.projectreactor:reactor-bus:$reactorVersion"
+
+    compile 'com.amazonaws:aws-java-sdk-sqs:1.9.30'
+
+    compile 'com.fasterxml.jackson.core:jackson-core:2.5.2'
+
+
+
+    // TEST Dependencies
+    testCompile("org.springframework.boot:spring-boot-starter-test:$springBootVersion")
+
+
+}
+

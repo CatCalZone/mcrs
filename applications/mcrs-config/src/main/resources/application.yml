@@ -1,0 +1,10 @@
+spring:
+    profiles:
+        active: native
+    cloud:
+        config:
+            server:
+                native:
+                    searchLocations: src/main/resources/configTmp
+server:
+  port: 8888

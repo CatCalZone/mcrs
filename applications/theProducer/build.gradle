@@ -1,0 +1,89 @@
+ext {
+    reactorVersion = '2.0.1.BUILD-SNAPSHOT'
+    springVersion = '4.1.5.RELEASE'
+    springBootVersion = '1.2.2.RELEASE'
+    springCloudVersion = '1.0.0.RELEASE'
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+}
+
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.0'
+}
+
+configurations.all {
+    resolutionStrategy {
+        eachDependency {
+            if (it.requested.group == 'org.apache.tomcat.embed') {
+                it.useVersion '8.0.20'
+            }
+        }
+    }
+}
+
+
+
+buildscript {
+    repositories {
+        maven { url "https://repo.spring.io/libs-snapshot" }
+    }
+    dependencies {
+       classpath("org.springframework.boot:spring-boot-gradle-plugin:1.1.10.RELEASE")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'spring-boot'
+
+jar {
+    baseName = 'theProducer'
+    version =  '0.1.0'
+}
+
+mainClassName = 'com.zuehlke.mcrs.producer.TheProducer'
+
+repositories {
+    mavenCentral()
+    maven { url "https://repo.spring.io/libs-snapshot" }
+}
+
+dependencies {
+
+    // Spring Boot
+    compile "org.springframework.boot:spring-boot-starter:$springBootVersion"
+    compile("org.springframework.boot:spring-boot-starter-web:$springBootVersion")
+    compile ("org.springframework.boot:spring-boot-starter-actuator:$springBootVersion")
+
+    // Spring Cloud
+    compile "org.springframework.cloud:spring-cloud-starter-eureka:$springCloudVersion"
+    compile "org.springframework.cloud:spring-cloud-starter-feign:$springCloudVersion"
+    compile "org.springframework.cloud:spring-cloud-config-client:$springCloudVersion"
+
+    // Spring Framework
+    compile "org.springframework:spring-core:$springVersion",
+            "org.springframework:spring-beans:$springVersion",
+            "org.springframework:spring-context:$springVersion",
+            "org.springframework:spring-context-support:$springVersion",
+            "org.springframework:spring-tx:$springVersion"
+
+    // Reactor
+    compile "io.projectreactor.spring:reactor-spring-context:$reactorVersion",
+            "io.projectreactor:reactor-groovy:$reactorVersion"
+    compile "io.projectreactor:reactor-stream:$reactorVersion",
+            "io.projectreactor:reactor-bus:$reactorVersion"
+
+    compile 'com.amazonaws:aws-java-sdk-sqs:1.9.30'
+
+    compile 'com.fasterxml.jackson.core:jackson-core:2.5.2'
+
+
+
+    // TEST Dependencies
+    testCompile("org.springframework.boot:spring-boot-starter-test:$springBootVersion")
+
+
+}

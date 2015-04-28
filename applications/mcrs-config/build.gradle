@@ -1,0 +1,54 @@
+ext {
+    springBootVersion = '1.2.1.RELEASE'
+    springCloudVersion = '1.0.0.RELEASE'
+    springVersion = '4.1.5.RELEASE'
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+}
+
+buildscript {
+    repositories {
+        maven { url "https://repo.spring.io/libs-snapshot" }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.1.10.RELEASE")
+    }
+}
+
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'spring-boot'
+
+jar {
+    baseName = 'mcrs-config'
+    version = '0.1.0'
+}
+
+repositories {
+    mavenCentral()
+    maven { url "https://repo.spring.io/libs-snapshot" }
+}
+
+dependencies {
+
+    // Spring Cloud
+    compile 'org.springframework.cloud:spring-cloud-config-client:1.0.1.RELEASE'
+    compile 'org.springframework.cloud:spring-cloud-config-server:1.0.1.RELEASE'
+    compile "org.springframework.boot:spring-boot-starter:$springBootVersion"
+
+
+
+    compile "org.springframework:spring-core:$springVersion",
+            "org.springframework:spring-beans:$springVersion",
+            "org.springframework:spring-context:$springVersion",
+            "org.springframework:spring-context-support:$springVersion",
+            "org.springframework:spring-tx:$springVersion"
+
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.3'
+}
