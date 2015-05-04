@@ -43,12 +43,7 @@ public class MessageSender implements Consumer<Event<AppointmentRequest>> {
 // todo hysterix
 
         AppointmentRequest data = event.getData();
-        if (!dryrun) {
-            this.appointmentGatewayService.createAppointmentRequest(data);
-
-        } else {
-
-        }
+        this.appointmentGatewayService.createAppointmentRequest(data);
 
         latch.countDown();
 

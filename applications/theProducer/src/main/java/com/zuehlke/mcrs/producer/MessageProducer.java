@@ -33,11 +33,6 @@ public class MessageProducer {
     public void createMessages()  {
         int index = 0;
         while(index++ < TheProducer.RUNS) {
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
             eventBus.notify(appointmentQueue, Event.wrap(messageCreator.newMessage()));
         }
 

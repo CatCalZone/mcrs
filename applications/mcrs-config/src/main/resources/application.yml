@@ -5,6 +5,6 @@ spring:
         config:
             server:
                 native:
-                    searchLocations: src/main/resources/configTmp
+                    searchLocations: classpath:configTmp/
 server:
   port: 8888

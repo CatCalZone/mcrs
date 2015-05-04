@@ -22,6 +22,10 @@ apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'spring-boot'
 
+springBoot {
+    requiresUnpack = ["com.netflix.eureka:eureka-core", "com.netflix.eureka:eureka-client"]
+}
+
 jar {
     baseName = 'mcrs-eureka'
     version = '0.1.0'

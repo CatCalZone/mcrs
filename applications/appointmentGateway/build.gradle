@@ -1,11 +1,9 @@
 ext {
-    groovyVersion = '2.4.1'
     slf4jVersion = '1.7.10'
     logbackVersion = '1.1.2'
-    reactorVersion = '2.0.1.BUILD-SNAPSHOT'
-    springVersion = '4.1.5.RELEASE'
-    springBootVersion = '1.2.1.RELEASE'
-    springCloudVersion = '1.0.0.RELEASE'
+    springVersion = '4.1.6.RELEASE'
+    springBootVersion = '1.2.3.RELEASE'
+    springCloudVersion = '1.0.1.RELEASE'
     spockVersion = '0.7-groovy-2.0'
 
     sourceCompatibility = 1.8
@@ -49,8 +47,6 @@ repositories {
 }
 
 dependencies {
-    // Groovy
-    compile "org.codehaus.groovy:groovy:$groovyVersion"
 
     // Spring Boot
     compile "org.springframework.boot:spring-boot-starter:$springBootVersion"
@@ -68,11 +64,6 @@ dependencies {
             "org.springframework:spring-context-support:$springVersion",
             "org.springframework:spring-tx:$springVersion"
 
-    // Reactor
-    compile "io.projectreactor.spring:reactor-spring-context:$reactorVersion",
-            "io.projectreactor:reactor-groovy:$reactorVersion"
-    compile "io.projectreactor:reactor-stream:$reactorVersion",
-            "io.projectreactor:reactor-bus:$reactorVersion"
 
     compile 'com.amazonaws:aws-java-sdk-sqs:1.9.30'
 

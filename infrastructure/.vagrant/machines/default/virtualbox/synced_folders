@@ -1,1 +1,1 @@
-{"virtualbox":{"/vagrant":{"guestpath":"/vagrant","hostpath":"/Users/kinggrass/source/topic_mcrs/Camp2015/infrastructure","disabled":false},"/source":{"guestpath":"/source","hostpath":"/Users/kinggrass/source/topic_mcrs/Camp2015/source","disabled":false}}}
+{"virtualbox":{"/applications":{"create":true,"guestpath":"/applications","hostpath":"/Users/kinggrass/Sources/topic_mcrs/CatCalZone/applications","disabled":false},"/vagrant":{"guestpath":"/vagrant","hostpath":"/Users/kinggrass/Sources/topic_mcrs/CatCalZone/infrastructure","disabled":false}}}

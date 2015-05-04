@@ -1,8 +1,8 @@
 ext {
     reactorVersion = '2.0.1.BUILD-SNAPSHOT'
-    springVersion = '4.1.5.RELEASE'
-    springBootVersion = '1.2.2.RELEASE'
-    springCloudVersion = '1.0.0.RELEASE'
+    springVersion = '4.1.6.RELEASE'
+    springBootVersion = '1.2.3.RELEASE'
+    springCloudVersion = '1.0.1.RELEASE'
 
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
