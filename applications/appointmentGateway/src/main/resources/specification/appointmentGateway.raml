@@ -1,0 +1,60 @@
+#%RAML 0.8
+
+title: AppointmentGateway API from the CatCalZone
+baseUri: http://catcalzone.com/
+version: v1
+schemas:
+    - appointmentRequest: |
+        {
+              "type": "object",
+              "$schema": "http://json-schema.org/draft-03/schema",
+              "id": "http://jsonschema.net",
+              "required": true,
+              "properties": {
+                    "requestUser": {
+                        "type" : "string",
+                        "items": {
+                            "type": "string"
+                        },
+                        "minItems": 1,
+                        "uniqueItems": true,
+                        "required" : true
+                    },
+                    "attendees": {
+                        "type" : "array",
+                        "required" : true
+                    },
+                    "minStartDate": {
+                        "type" : "date",
+                        "required" : true
+                    },
+                    "maxEndDate": {
+                        "type" : "date",
+                        "required" : true
+                    },
+                    "durationInHours": {
+                        "type" : "integer",
+                        "required" : true
+                    },
+                    "title": {
+                        "type": "string",
+                        "required": true
+                    }
+
+              }
+        }
+/appointment:
+  get:
+    description: Returns this document or a HTML version of it
+    #responses: TODO
+  post:
+    description: Start a new appointment request.
+    body:
+        application/json:
+            schema: appointmentRequest
+            example: TODO
+    responses:
+        200:
+        404:
+
+

@@ -6,6 +6,8 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 /**
  * Created by kinggrass on 17.04.15.
@@ -14,10 +16,14 @@ import org.springframework.context.annotation.Configuration;
 @EnableAutoConfiguration
 @EnableEurekaClient
 @ComponentScan
-public class ContextConfig {
+public class ContextConfig  extends WebMvcConfigurerAdapter {
 
-    public static final int RUNS = 20;
-
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry
+                .addResourceHandler("/appointment/specification/**")
+                .addResourceLocations("classpath:specification/");
+    }
 
     /*@Bean
     public QueueMessagingTemplate queueMessagingTemplate(AmazonSQS amazonSqs, ResourceIdResolver resourceIdResolver) {

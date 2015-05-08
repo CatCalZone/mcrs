@@ -52,5 +52,8 @@ public class AppointmentRequestControllerTest {
                 .content(mapper.writeValueAsString(request))
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
+
+
+
     }
 }

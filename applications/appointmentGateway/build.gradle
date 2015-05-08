@@ -74,6 +74,6 @@ dependencies {
     // TEST Dependencies
     testCompile("org.springframework.boot:spring-boot-starter-test:$springBootVersion")
 
-
+    testCompile 'org.raml:raml-parser:0.8.11'
 }
 
