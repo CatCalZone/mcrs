@@ -1,7 +1,12 @@
 package com.zuehlke.mcrs.gateway;
 
+import com.amazonaws.services.sqs.AmazonSQS;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.zuehlke.mcrs.gateway.aws.AWSFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.cloud.aws.core.env.ResourceIdResolver;
+import org.springframework.cloud.aws.messaging.core.QueueMessagingTemplate;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -14,9 +19,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
  */
 @Configuration
 @EnableAutoConfiguration
-@EnableEurekaClient
+//@EnableEurekaClient
 @ComponentScan
-public class ContextConfig  extends WebMvcConfigurerAdapter {
+public class ContextConfig extends WebMvcConfigurerAdapter {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -24,11 +29,12 @@ public class ContextConfig  extends WebMvcConfigurerAdapter {
                 .addResourceHandler("/appointment/specification/**")
                 .addResourceLocations("classpath:specification/");
     }
-
-    /*@Bean
+/*
+    @Bean
     public QueueMessagingTemplate queueMessagingTemplate(AmazonSQS amazonSqs, ResourceIdResolver resourceIdResolver) {
         return new QueueMessagingTemplate(amazonSqs, resourceIdResolver);
     }
+
 
     @Autowired
     AWSFactory awsFactory;
@@ -37,7 +43,7 @@ public class ContextConfig  extends WebMvcConfigurerAdapter {
     AmazonSQS createSQSService() {
         return awsFactory.createSQS();
     }
-    */
+*/
 
     @Bean
     ObjectMapper createJsonMapper() {

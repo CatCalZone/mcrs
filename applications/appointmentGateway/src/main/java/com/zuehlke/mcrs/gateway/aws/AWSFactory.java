@@ -7,6 +7,7 @@ import com.amazonaws.regions.Region;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.sqs.AmazonSQS;
 import com.amazonaws.services.sqs.AmazonSQSClient;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 /**
@@ -15,11 +16,17 @@ import org.springframework.stereotype.Service;
 @Service
 public class AWSFactory {
 
+    @Value("${incomingAppointmentQueue:testQueue}")
+    private String incomingSMSQueue;
+
+
     public AmazonSQS createSQS() {
 
         AWSCredentials credentials = null;
 
         try {
+
+            credentials = new BasicAWSCredentials("x", "x");
 
         } catch (Exception e) {
             throw new AmazonClientException(
@@ -30,8 +37,10 @@ public class AWSFactory {
         }
 
         AmazonSQS sqs = new AmazonSQSClient(credentials);
+        sqs.setEndpoint("http://localhost:9324");
         Region usWest2 = Region.getRegion(Regions.US_WEST_2);
-        sqs.setRegion(usWest2);
+       // sqs.setRegion(usWest2);
+        sqs.createQueue("testQueue");
         return sqs;
 
     }

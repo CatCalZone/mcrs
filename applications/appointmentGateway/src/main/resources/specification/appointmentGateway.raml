@@ -11,18 +11,25 @@ schemas:
               "id": "http://jsonschema.net",
               "required": true,
               "properties": {
+                    "requestId": {
+                        "type" : "string"
+                    },
+                    "title": {
+                                            "type": "string",
+                                            "required": true
+                                        },
                     "requestUser": {
                         "type" : "string",
-                        "items": {
-                            "type": "string"
-                        },
-                        "minItems": 1,
-                        "uniqueItems": true,
                         "required" : true
                     },
                     "attendees": {
                         "type" : "array",
-                        "required" : true
+                        "items": {
+                            "type": "string"
+                         },
+                         "minItems": 1,
+                         "uniqueItems": true,
+                         "required" : true
                     },
                     "minStartDate": {
                         "type" : "date",
@@ -36,9 +43,12 @@ schemas:
                         "type" : "integer",
                         "required" : true
                     },
-                    "title": {
-                        "type": "string",
-                        "required": true
+
+                    "status": {
+                        "type": "string"
+                    },
+                    "slot" : {
+                        "type" : "appointmentSlotType"
                     }
 
               }
