@@ -28,7 +28,7 @@ public class AppointmentRequestController {
     public void getDocumentationHtml (HttpServletResponse response) {
 
         try {
-            response.sendRedirect("/appointment/specification/index.html");
+            response.sendRedirect("/specification/index.html");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -39,7 +39,7 @@ public class AppointmentRequestController {
     public void getRamlSpecification (HttpServletResponse response) {
 
         try {
-            response.sendRedirect("/appointment/specification/appointmentGateway.raml");
+            response.sendRedirect("/specification/catcalzone.raml");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
