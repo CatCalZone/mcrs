@@ -39,7 +39,7 @@ public class AppointmentRequestController {
     public void getRamlSpecification (HttpServletResponse response) {
 
         try {
-            response.sendRedirect("/appointment/specification/appointmentGateway.raml");
+            response.sendRedirect("/appointment/specification/catCalZone.raml");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

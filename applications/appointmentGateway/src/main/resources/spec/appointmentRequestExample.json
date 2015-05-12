@@ -1,0 +1,22 @@
+{
+  requestId: 1234,
+  title: "minigolf",
+  requestUser: "SampleUser",
+  attendees: [
+    "User1",
+    "User2"
+  ],
+  minStartDate: "12.12.2015",
+  maxEndDate: "16.12.2015",
+  durationInHours: 2,
+  creationDateTime: "",
+  status: "NEW",
+  slot: {
+    requestId: 1234,
+    startDateTime: "",
+    endDateTime: "",
+    votedFor: [],
+    voteAgainst: [],
+    notVoted: []
+  }
+}

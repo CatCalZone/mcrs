@@ -21,8 +21,8 @@ public class ContextConfig  extends WebMvcConfigurerAdapter {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry
-                .addResourceHandler("/appointment/specification/**")
-                .addResourceLocations("classpath:specification/");
+                .addResourceHandler("/specification/**")
+                .addResourceLocations("classpath:spec/");
     }
 
     /*@Bean

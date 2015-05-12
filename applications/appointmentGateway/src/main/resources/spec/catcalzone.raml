@@ -1,8 +1,8 @@
 #%RAML 0.8
-
-title: AppointmentGateway API from the CatCalZone
-baseUri: http://catcalzone.com/
+title: CatCalZone API
+baseUri: http://catcal.zone/
 version: v1
+mediaType: application/json
 schemas:
     - appointmentRequest: |
         {
@@ -43,18 +43,36 @@ schemas:
 
               }
         }
-/appointment:
+/:
   get:
-    description: Returns this document or a HTML version of it
+    description: Depending on the requested mediatype returns this document or a HTML version of it
+    responses:
+        200:
+            body:
+                text/html:
+                application/raml+yaml:
+/appointmentRequest:
+  get:
+    description: Returns a list of appointment requests for a user
+    queryParameters:
+        user:
+            required: true
     #responses: TODO
   post:
-    description: Start a new appointment request.
+    description: Inserts a new appointment request
     body:
         application/json:
             schema: appointmentRequest
             example: TODO
-    responses:
-        200:
-        404:
-
-
+  /{appointmentRequestId}:
+    get:
+        description: Returns a specific request by ID.
+    put:
+        description: Updates an appointment request
+    delete:
+        description: Cancles a specific request by ID.
+  /slot/{appointmentSlotId}:
+    get:
+        description: Returns a specific slot by id.
+    put:
+        description: Updates a specific slot by id
