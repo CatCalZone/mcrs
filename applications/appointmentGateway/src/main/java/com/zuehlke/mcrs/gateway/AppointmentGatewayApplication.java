@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 @Configuration
-@Import(ContextConfig.class)
+@Import({ContextConfig.class,AwsContextConfig.class})
 public class AppointmentGatewayApplication {
 
     public static void main(String[] args) throws InterruptedException {

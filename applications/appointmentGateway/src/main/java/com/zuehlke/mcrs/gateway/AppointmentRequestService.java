@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class AppointmentRequestService {
 
-  //  @Autowired
+    @Autowired
     SQSFacade sqs;
 
     @Autowired
@@ -22,8 +22,8 @@ public class AppointmentRequestService {
     public String createAppointmentRequest(AppointmentRequest request) {
 
         try {
-            mapper.writeValueAsString(request);
-           // sqs.sendMessage();
+            String message = mapper.writeValueAsString(request);
+            sqs.sendMessage(message);
             return request.getId();
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);

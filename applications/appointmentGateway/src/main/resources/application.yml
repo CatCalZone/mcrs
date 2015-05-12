@@ -1,2 +1,4 @@
 server:
   port: 8090
+#tmp
+incomingAppointmentQueue: appointmentRequestQueue

@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class AWSFactory {
 
-    @Value("${incomingAppointmentQueue:testQueue}")
+    @Value("${incomingAppointmentQueue}")
     private String incomingSMSQueue;
 
 
@@ -40,7 +40,7 @@ public class AWSFactory {
         sqs.setEndpoint("http://localhost:9324");
         Region usWest2 = Region.getRegion(Regions.US_WEST_2);
        // sqs.setRegion(usWest2);
-        sqs.createQueue("testQueue");
+        sqs.createQueue(incomingSMSQueue);
         return sqs;
 
     }

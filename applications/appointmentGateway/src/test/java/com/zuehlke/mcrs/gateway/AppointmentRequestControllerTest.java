@@ -27,7 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Created by kinggrass on 17.04.15.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = { ContextConfig.class})
+@SpringApplicationConfiguration(classes = { ContextConfig.class, TestContextConfig.class})
 @WebAppConfiguration
 public class AppointmentRequestControllerTest {
 
@@ -45,7 +45,7 @@ public class AppointmentRequestControllerTest {
     }
 
     @Test
-    public void getHello() throws Exception {
+    public void testAppointment() throws Exception {
         AppointmentRequest request = new AppointmentRequest("test", "test");
         mvc.perform(MockMvcRequestBuilders.post("/appointment")
                 .contentType(MediaType.APPLICATION_JSON_VALUE)

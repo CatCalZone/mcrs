@@ -1,5 +1,7 @@
 package com.zuehlke.mcrs.gateway;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.UUID;
 
 /**
@@ -11,6 +13,7 @@ public class AppointmentRequest {
     private String description;
     private String id;
 
+    @JsonProperty("id")
     public String getId() {
         return id;
     }
@@ -22,7 +25,7 @@ public class AppointmentRequest {
     }
 
     public AppointmentRequest() {
-
+        this.id = UUID.randomUUID().toString();
     }
 
     public String getInitiatorName() {

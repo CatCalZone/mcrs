@@ -19,7 +19,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
  */
 @Configuration
 @EnableAutoConfiguration
-//@EnableEurekaClient
+@EnableEurekaClient
 @ComponentScan
 public class ContextConfig extends WebMvcConfigurerAdapter {
 
@@ -29,21 +29,9 @@ public class ContextConfig extends WebMvcConfigurerAdapter {
                 .addResourceHandler("/specification/**")
                 .addResourceLocations("classpath:spec/");
     }
-/*
-    @Bean
-    public QueueMessagingTemplate queueMessagingTemplate(AmazonSQS amazonSqs, ResourceIdResolver resourceIdResolver) {
-        return new QueueMessagingTemplate(amazonSqs, resourceIdResolver);
-    }
 
 
-    @Autowired
-    AWSFactory awsFactory;
 
-    @Bean
-    AmazonSQS createSQSService() {
-        return awsFactory.createSQS();
-    }
-*/
 
     @Bean
     ObjectMapper createJsonMapper() {

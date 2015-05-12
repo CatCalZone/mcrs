@@ -14,23 +14,21 @@ import org.springframework.stereotype.Service;
 public class SQSFacade {
 
 
-  //  @Autowired
+    @Autowired
     AmazonSQS sqs;
 
-    @Value("${sendToSqs :true}")
+    @Value("${sendToSqs:true}")
     private boolean sendToSqs;
 
-    @Value("${incomingAppointmentQueue:testQueue}")
+    @Value("${incomingAppointmentQueue}")
     private String incomingSMSQueue;
 
 
     public void sendMessage(String json) {
         if (sendToSqs) {
             System.out.println("TO SQS: " + json);
-            String queueUrl = sqs.getQueueUrl("testQueue").getQueueUrl();
+            String queueUrl = sqs.getQueueUrl(incomingSMSQueue).getQueueUrl();
             sqs.sendMessage(queueUrl,json);
-
-
         } else {
             System.out.println(json);
         }

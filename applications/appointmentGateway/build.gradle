@@ -34,6 +34,7 @@ configurations.all {
             }
         }
     }
+    all*.exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
 }
 
 jar {
@@ -49,8 +50,9 @@ repositories {
 dependencies {
 
     // Spring Boot
-    compile "org.springframework.boot:spring-boot-starter:$springBootVersion"
+    compile("org.springframework.boot:spring-boot-starter:$springBootVersion")
     compile("org.springframework.boot:spring-boot-starter-web:$springBootVersion")
+    compile("org.springframework.boot:spring-boot-starter-log4j:$springBootVersion")
 
     // Spring Cloud
     compile "org.springframework.cloud:spring-cloud-aws-context:$springCloudVersion"
