@@ -7,23 +7,16 @@ if [ -z "$BASE_DIR" ] ; then
 fi
 echo "$BASE_DIR"
 
+applications[0]=supportingServices/mcrs-eureka
+applications[1]=supportingServices/mcrs-config
+applications[2]=supportingServices/mcrs-zuul
+applications[3]=appointmentGateway
+applications[4]=theProducer
 
-echo "building mcrs-eureka"
-cd supportingServices/mcrs-eureka && ./gradlew clean build 
-cd $BASE_DIR
+for i in ${applications[@]}; do
+     
+	echo "building $i"
+	cd $i && ./gradlew $1 $2 $3 $4
+	cd $BASE_DIR
 
-echo "building mcrs-config"
-cd supportingServices/mcrs-config && ./gradlew clean build 
-cd $BASE_DIR
-
-echo "building mcrs-zuul"
-cd supportingServices/mcrs-config && ./gradlew clean build 
-cd $BASE_DIR
-
-echo "building appointmentGateway"
-cd supportingServices/appointmentGateway && ./gradlew clean build 
-cd $BASE_DIR
-
-echo "building theProducer"
-cd theProducer && ./gradlew clean build 
-cd $BASE_DIR
+done
