@@ -73,7 +73,7 @@ schemas:
     body:
         application/json:
             schema: appointmentRequest
-            example: TODO
+            example: !include appointmentRequestExample.json
   /{appointmentRequestId}:
     get:
         description: Returns a specific request by ID.

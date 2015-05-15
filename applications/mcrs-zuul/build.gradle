@@ -1,0 +1,62 @@
+ext {
+    springVersion = '4.1.6.RELEASE'
+    springBootVersion = '1.2.3.RELEASE'
+    springCloudVersion = '1.0.1.RELEASE'
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+}
+
+buildscript {
+    repositories {
+        maven { url "https://repo.spring.io/libs-snapshot" }        
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.1.10.RELEASE")
+    }
+}
+
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'spring-boot'
+
+jar {
+    baseName = 'mcrs-zuul'
+    version = '0.1.0'
+}
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+    maven { url "https://repo.spring.io/libs-snapshot" }
+}
+
+dependencies {
+
+    // Spring Cloud
+    compile "org.springframework.cloud:spring-cloud-starter-eureka:$springCloudVersion"
+    compile "org.springframework.cloud:spring-cloud-starter-zuul:$springCloudVersion"
+    compile ("org.springframework.boot:spring-boot-starter-actuator:$springBootVersion")
+
+    compile "org.springframework.boot:spring-boot-starter:$springBootVersion"
+//    compile("org.springframework.boot:spring-boot-starter-web:$springBootVersion")
+
+    // Spring Framework
+    compile "org.springframework:spring-core:$springVersion",
+            "org.springframework:spring-beans:$springVersion",
+            "org.springframework:spring-context:$springVersion",
+            "org.springframework:spring-context-support:$springVersion",
+            "org.springframework:spring-tx:$springVersion"
+
+
+    // TEST Dependencies
+    testCompile("org.springframework.boot:spring-boot-starter-test:$springBootVersion")
+
+
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.0'
+}

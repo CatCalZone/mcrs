@@ -1,0 +1,21 @@
+server:
+  port: 8666
+    
+eureka:
+  instance:
+    leaseRenewalIntervalInSeconds: 10
+    statusPageUrlPath: /info
+    healthCheckUrlPath: /health    
+
+zuul:
+  routes:
+     resource:
+        path: /appointment/**
+        url: http://appointmentgateway/appointment
+
+logging:
+  level:
+    ROOT: INFO
+    org.springframework.web: DEBUG
+
+  

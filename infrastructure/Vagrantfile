@@ -17,8 +17,8 @@ Vagrant.configure("2") do |config|
     d.build_image "--tag=configsrv /vagrant/configsrv"
     d.build_image "--tag=elasticmq /vagrant/elasticMQ" 
 
-   # d.run "eureka",
-   #   args: "-p 8761:8761 -v /applications:/applications"
+    d.run "eureka",
+      args: "-p 8761:8761 -v /applications:/applications"
    # d.run "configsrv",
    #   args: "-p 8888:8888 -v /applications:/applications"
 
