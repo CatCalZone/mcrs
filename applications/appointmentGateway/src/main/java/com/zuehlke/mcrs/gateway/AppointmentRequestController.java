@@ -18,32 +18,15 @@ import static org.springframework.http.MediaType.*;
  * Created by dea on 17.04.15.
  */
 @RestController
-@RequestMapping("/appointment")
+@RequestMapping("/")
 public class AppointmentRequestController {
 
     @Autowired
     private AppointmentRequestService service;
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
-    public void getDocumentationHtml (HttpServletResponse response) {
-
-        try {
-            response.sendRedirect("/specification/index.html");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-    }
-
-    @RequestMapping(method = RequestMethod.GET, produces = "application/raml+yaml")
-    public void getRamlSpecification (HttpServletResponse response) {
-
-        try {
-            response.sendRedirect("/specification/catcalzone.raml");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
+    public String getDocumentationHtml (HttpServletResponse response) {
+        return "hello from appointment gateway";
     }
 
     @RequestMapping(method= RequestMethod.POST)

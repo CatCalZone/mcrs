@@ -23,16 +23,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @ComponentScan
 public class ContextConfig extends WebMvcConfigurerAdapter {
 
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry
-                .addResourceHandler("/specification/**")
-                .addResourceLocations("classpath:spec/");
-    }
-
-
-
-
     @Bean
     ObjectMapper createJsonMapper() {
         ObjectMapper mapper = new ObjectMapper();

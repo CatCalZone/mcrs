@@ -1,6 +1,9 @@
 server:
-  port: 8087
+  port: 0
 eureka:
   instance:
+    leaseRenewalIntervalInSeconds: 10
     metadataMap:
-      instanceId: ${spring.application.name}:${random.value}
+      instanceId: ${vcap.application.instance_id:${spring.application.name}:${spring.application.instance_id:${random.value}}}
+  client:
+    registryFetchIntervalSeconds: 5

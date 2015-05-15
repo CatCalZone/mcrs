@@ -7,9 +7,9 @@ if [ -z "$BASE_DIR" ] ; then
 fi
 echo "$BASE_DIR"
 
-applications[0]=supportingServices/mcrs-eureka
+applications[0]=supportingServices/discoveryService
 applications[1]=supportingServices/mcrs-config
-applications[2]=supportingServices/mcrs-zuul
+applications[2]=supportingServices/edgeService
 applications[3]=appointmentGateway
 applications[4]=theProducer
 

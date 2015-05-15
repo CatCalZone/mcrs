@@ -1,4 +1,4 @@
-package com.zuehlke.calcatzone.zuul;
+package com.zuehlke.calcatzone.edgeservice;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -9,10 +9,10 @@ import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
  */
 @SpringBootApplication
 @EnableZuulProxy
-public class ZuulApplication {
+public class EdgeServiceApp {
 
     public static void main(String[] args) {
-        new SpringApplicationBuilder(ZuulApplication.class).web(true).run(args);
+        new SpringApplicationBuilder(EdgeServiceApp.class).web(true).run(args);
     }
 
 }

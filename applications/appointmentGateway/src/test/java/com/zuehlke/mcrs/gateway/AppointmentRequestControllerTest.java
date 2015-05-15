@@ -47,7 +47,7 @@ public class AppointmentRequestControllerTest {
     @Test
     public void testAppointment() throws Exception {
         AppointmentRequest request = new AppointmentRequest("test", "test");
-        mvc.perform(MockMvcRequestBuilders.post("/appointment")
+        mvc.perform(MockMvcRequestBuilders.post("/")
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(mapper.writeValueAsString(request))
                 .accept(MediaType.APPLICATION_JSON))
