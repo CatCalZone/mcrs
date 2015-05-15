@@ -1,1 +1,0 @@
-{"virtualbox":{"/applications":{"create":true,"guestpath":"/applications","hostpath":"/Users/kinggrass/Sources/topic_mcrs/CatCalZone/applications","disabled":false},"/vagrant":{"guestpath":"/vagrant","hostpath":"/Users/kinggrass/Sources/topic_mcrs/CatCalZone/infrastructure","disabled":false}}}
