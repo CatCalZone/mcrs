@@ -1,15 +1,14 @@
 package com.zuehlke.mcrs.gateway;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.zuehlke.mcrs.gateway.model.AppointmentRequest;
+import lombok.extern.java.Log;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.MediaType;
-import org.springframework.mock.web.MockServletContext;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
@@ -17,10 +16,9 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import javax.annotation.Resource;
+import java.time.LocalDate;
+import java.util.Arrays;
 
-import static org.hamcrest.Matchers.equalTo;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
@@ -29,12 +27,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = { ContextConfig.class, TestContextConfig.class})
 @WebAppConfiguration
+@Log
 public class AppointmentRequestControllerTest {
 
 
     private MockMvc mvc;
 
-    private ObjectMapper mapper = new ObjectMapper();
+    @Autowired
+    private ObjectMapper mapper;
 
     @Autowired
     private WebApplicationContext wac;
@@ -46,14 +46,19 @@ public class AppointmentRequestControllerTest {
 
     @Test
     public void testAppointment() throws Exception {
-        AppointmentRequest request = new AppointmentRequest("test", "test");
-        mvc.perform(MockMvcRequestBuilders.post("/")
+        AppointmentRequest request = new AppointmentRequest();
+        request.setRequestUser("requestUser");
+        request.setTitle("testRequest");
+        request.setAttendees(Arrays.asList("User1", "User2"));
+        request.setMinStartDate(LocalDate.of(2015,5,30));
+        request.setMaxEndDate(LocalDate.of(2015,6,6));
+        log.info(mapper.writeValueAsString(request));
+
+        mvc.perform(MockMvcRequestBuilders.post("/appointment")
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(mapper.writeValueAsString(request))
-                .accept(MediaType.APPLICATION_JSON))
+                .accept(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk());
-
-
 
     }
 }

@@ -1,39 +1,35 @@
 package com.zuehlke.mcrs.gateway;
 
-import com.zuehlke.mcrs.gateway.aws.SQSFacade;
+import com.zuehlke.mcrs.gateway.model.AppointmentRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.UUID;
-
-import static org.springframework.http.MediaType.*;
+import javax.validation.Valid;
 
 /**
  * Created by dea on 17.04.15.
  */
 @RestController
-@RequestMapping("/")
+@RequestMapping("/appointment")
 public class AppointmentRequestController {
 
     @Autowired
     private AppointmentRequestService service;
 
-    @RequestMapping(method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
-    public String getDocumentationHtml (HttpServletResponse response) {
-        return "hello from appointment gateway";
+    @RequestMapping(method = RequestMethod.GET, produces = MediaType.TEXT_PLAIN_VALUE)
+    public String ping (HttpServletResponse response) {
+        return "ping from appointment gateway";
     }
 
     @RequestMapping(method= RequestMethod.POST)
-    public String createAppointmentRequest(@RequestBody final AppointmentRequest request) {
+    public AppointmentRequest createAppointmentRequest(@RequestBody @Valid final AppointmentRequest request) {
         return service.createAppointmentRequest(request);
-
     }
+
+
 
 
 }

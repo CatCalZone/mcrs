@@ -35,9 +35,18 @@ repositories {
 
 dependencies {
 
+    // include self-made spring cloud netflix core jar
+    compile files("libs/spring-cloud-netflix-core-1.0.1.RELEASE_METHOD_ROUTING.jar")
+    //compile  fileTree(dir: 'libs', include: '*.jar')
+
     // Spring Cloud
-    compile "org.springframework.cloud:spring-cloud-starter-eureka:$springCloudVersion"
-    compile "org.springframework.cloud:spring-cloud-starter-zuul:$springCloudVersion"
+    compile("org.springframework.cloud:spring-cloud-starter-eureka:$springCloudVersion"){
+        exclude module: 'spring-cloud-netflix-core' //by artifact name
+    }
+
+    compile ("org.springframework.cloud:spring-cloud-starter-zuul:$springCloudVersion") {
+        exclude module: 'spring-cloud-netflix-core' //by artifact name
+    }
     compile ("org.springframework.boot:spring-boot-starter-actuator:$springBootVersion")
 
     compile "org.springframework.boot:spring-boot-starter:$springBootVersion"

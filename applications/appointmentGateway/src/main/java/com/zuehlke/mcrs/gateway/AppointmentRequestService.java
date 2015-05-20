@@ -2,9 +2,8 @@ package com.zuehlke.mcrs.gateway;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.zuehlke.mcrs.gateway.aws.SQSFacade;
+import com.zuehlke.mcrs.gateway.model.AppointmentRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.aws.messaging.core.QueueMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 /**
@@ -14,17 +13,17 @@ import org.springframework.stereotype.Service;
 public class AppointmentRequestService {
 
     @Autowired
-    SQSFacade sqs;
+    IncomingAppointmentRequestQueue incomingQueue;
 
     @Autowired
     ObjectMapper mapper;
 
-    public String createAppointmentRequest(AppointmentRequest request) {
+    public AppointmentRequest createAppointmentRequest(AppointmentRequest request) {
 
         try {
             String message = mapper.writeValueAsString(request);
-            sqs.sendMessage(message);
-            return request.getId();
+            incomingQueue.sendMessage(message);
+            return request;
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }

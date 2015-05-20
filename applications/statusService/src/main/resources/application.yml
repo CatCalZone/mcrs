@@ -1,5 +1,5 @@
 info:
-  component: Appointment Request Gateway
+  component: Appointment Request Status Service
 
 server:
   port: 0
@@ -10,6 +10,3 @@ eureka:
       instanceId: ${vcap.application.instance_id:${spring.application.name}:${spring.application.instance_id:${random.value}}}
   client:
     registryFetchIntervalSeconds: 5
-
-#tmp
-incomingAppointmentQueue: appointmentRequestQueue

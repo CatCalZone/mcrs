@@ -14,7 +14,12 @@ zuul:
   routes:
     appointmentGateway:
       path: /appointment/**
-#      stripPrefix: false
+      method: POST
+      stripPrefix: false
+    statusService:
+          path: /appointment/**
+          method: GET
+          stripPrefix: false
 
 server:
   port: 8765

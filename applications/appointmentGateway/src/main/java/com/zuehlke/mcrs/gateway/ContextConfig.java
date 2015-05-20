@@ -26,6 +26,7 @@ public class ContextConfig extends WebMvcConfigurerAdapter {
     @Bean
     ObjectMapper createJsonMapper() {
         ObjectMapper mapper = new ObjectMapper();
+        mapper.findAndRegisterModules();
         return mapper;
     }
 

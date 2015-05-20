@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: statusService
+  cloud:
+    config:
+      enabled: false

@@ -18,7 +18,6 @@ buildscript {
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:1.1.10.RELEASE")
-        classpath 'org.springframework:springloaded:1.2.3.RELEASE'
     }
 }
 
@@ -38,22 +37,13 @@ configurations.all {
     all*.exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
 }
 
-idea {
-    module {
-        inheritOutputDirs = false
-        outputDir = file("$buildDir/classes/main/")
-    }
-}
-
-
 jar {
-    baseName = 'appointmentGateway'
+    baseName = 'statusService'
     version =  '0.1.0'
 }
 
 repositories {
     mavenCentral()
-    mavenLocal()
     maven { url "https://repo.spring.io/libs-snapshot" }
 }
 
@@ -63,10 +53,6 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter:$springBootVersion")
     compile("org.springframework.boot:spring-boot-starter-web:$springBootVersion")
     compile("org.springframework.boot:spring-boot-starter-log4j:$springBootVersion")
-    compile("org.springframework.boot:spring-boot-starter-actuator:$springBootVersion")
-
-    compile "org.projectlombok:lombok:1.16.4"
-    compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.6.0-rc1"
 
     // Spring Cloud
     compile "org.springframework.cloud:spring-cloud-aws-context:$springCloudVersion"
