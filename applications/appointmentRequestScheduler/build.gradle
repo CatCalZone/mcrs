@@ -18,7 +18,7 @@ buildscript {
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:1.1.10.RELEASE")
-        classpath 'org.springframework:springloaded:1.2.3.RELEASE'
+        classpath("org.springframework:springloaded:1.2.3.RELEASE")
     }
 }
 
@@ -47,7 +47,7 @@ idea {
 
 
 jar {
-    baseName = 'appointmentGateway'
+    baseName = 'appointmentRequestScheduler'
     version =  '0.1.0'
 }
 
@@ -64,7 +64,7 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-web:$springBootVersion")
     compile("org.springframework.boot:spring-boot-starter-log4j:$springBootVersion")
     compile("org.springframework.boot:spring-boot-starter-actuator:$springBootVersion")
-    compile("org.springframework.boot:spring-boot-starter-amqp:$springBootVersion")
+    compile("org.springframework.boot:spring-boot-starter-amqp")
 
     compile "org.projectlombok:lombok:1.16.4"
     compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.6.0-rc1"
