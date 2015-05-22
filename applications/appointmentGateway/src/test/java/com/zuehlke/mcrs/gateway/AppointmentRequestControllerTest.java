@@ -44,7 +44,7 @@ public class AppointmentRequestControllerTest {
         mvc = MockMvcBuilders.webAppContextSetup(wac).build();
     }
 
-    @Test
+  //  @Test
     public void testAppointment() throws Exception {
         AppointmentRequest request = new AppointmentRequest();
         request.setRequestUser("requestUser");

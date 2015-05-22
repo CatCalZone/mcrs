@@ -18,7 +18,7 @@ buildscript {
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:1.1.10.RELEASE")
-        classpath 'org.springframework:springloaded:1.2.3.RELEASE'
+        //classpath 'org.springframework:springloaded:1.2.3.RELEASE'
     }
 }
 
@@ -38,13 +38,14 @@ configurations.all {
     all*.exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
 }
 
+/*
 idea {
     module {
         inheritOutputDirs = false
         outputDir = file("$buildDir/classes/main/")
     }
 }
-
+*/
 
 jar {
     baseName = 'appointmentGateway'
@@ -53,7 +54,6 @@ jar {
 
 repositories {
     mavenCentral()
-    mavenLocal()
     maven { url "https://repo.spring.io/libs-snapshot" }
 }
 
