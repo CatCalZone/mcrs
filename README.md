@@ -28,17 +28,16 @@ Every single application can be started by 'gradlew bootRun' in the specific fol
 Insert an appointment request: 
 * POST: http://localhost:8765/appointment
 
-<code>
-{
-    "attendees": [
-        "User1", 
-        "User2"
-    ], 
-    "creationDateTimeStamp": 1432110730, 
-    "durationInHours": 2,
-    "maxEndDateTimeStamp": 1432944000, 
-    "minStartDateTimeStamp": 1432944000, 
-    "requestUser": "requestUser", 
-    "title": "testRequest"
-}
-</code>
+
+	{
+	    "attendees": [
+	        "User1", 
+	        "User2"
+	    ], 
+	    "creationDateTimeStamp": 1432110730, 
+	    "durationInHours": 2,
+	    "maxEndDateTimeStamp": 1432944000, 
+	    "minStartDateTimeStamp": 1432944000, 
+	    "requestUser": "requestUser", 
+	    "title": "testRequest"
+	}
