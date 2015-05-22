@@ -1,7 +1,7 @@
-package com.zuehlke.mcrs.gateway;
+package com.zuehlke.catcalzone.scheduler;
 
 import com.amazonaws.services.sqs.AmazonSQS;
-import com.zuehlke.mcrs.gateway.aws.AWSFactory;
+import com.zuehlke.catcalzone.scheduler.aws.AWSFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

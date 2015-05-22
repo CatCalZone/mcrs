@@ -1,17 +1,16 @@
 package com.zuehlke.mcrs.gateway;
 
-import com.amazonaws.services.sqs.AmazonSQS;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.zuehlke.mcrs.gateway.aws.AWSFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.amqp.core.Binding;
+import org.springframework.amqp.core.BindingBuilder;
+import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.core.TopicExchange;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.cloud.aws.core.env.ResourceIdResolver;
-import org.springframework.cloud.aws.messaging.core.QueueMessagingTemplate;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 /**
@@ -29,6 +28,26 @@ public class ContextConfig extends WebMvcConfigurerAdapter {
         mapper.findAndRegisterModules();
         return mapper;
     }
+
+    @Value("${incomingAppointmentQueue}")
+    private String queueName;
+
+    @Bean
+    Queue queue() {
+        return new Queue(queueName, false);
+    }
+
+
+    @Bean
+    TopicExchange exchange() {
+        return new TopicExchange(queueName+"-exchange");
+    }
+
+    @Bean
+    Binding binding(Queue queue, TopicExchange exchange) {
+        return BindingBuilder.bind(queue).to(exchange).with(queueName);
+    }
+
 
 
 }

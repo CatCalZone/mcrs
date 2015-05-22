@@ -1,4 +1,4 @@
-package com.zuehlke.mcrs.gateway.aws;
+package com.zuehlke.catcalzone.scheduler.aws;
 
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.auth.AWSCredentials;

@@ -58,14 +58,12 @@ public class AppointmentRequestControllerTest {
         request.setDurationInHours(2);
         log.info(mapper.writeValueAsString(request));
 
-        ResultActions resultActions = mvc.perform(MockMvcRequestBuilders.post("/appointment")
+        ResultActions perform = mvc.perform(MockMvcRequestBuilders.post("/appointment")
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(mapper.writeValueAsString(request))
-                .accept(MediaType.ALL_VALUE))
-                ;
+                .accept(MediaType.APPLICATION_JSON_VALUE));
 
-        resultActions.andReturn().getResponse();
-        resultActions.andExpect(status().isOk());
+        perform.andExpect(status().isOk());
 
 
     }
