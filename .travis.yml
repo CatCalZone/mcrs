@@ -1,1 +1,1 @@
-script: ./applications/buildAll.sh
+script: ./applications/buildAll.sh clean build
