@@ -29,4 +29,23 @@ logging:
     ROOT: INFO
     org.springframework.web: INFO
 
-  
+eureka:
+   instance:
+    # hostname:
+      leaseRenewalIntervalInSeconds: 10
+      metadataMap:
+        instanceId: ${vcap.application.instance_id:${spring.application.name}:${spring.application.instance_id:${random.value}}}
+   client:
+      serviceUrl:
+        defaultZone: http://localhost:8761/eureka/
+
+---
+
+spring:
+    profiles: docker
+
+eureka:
+  client:
+      serviceUrl:
+        defaultZone: http://discoveryservice:8761/eureka/
+

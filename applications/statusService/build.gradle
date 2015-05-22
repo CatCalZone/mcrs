@@ -53,6 +53,7 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter:$springBootVersion")
     compile("org.springframework.boot:spring-boot-starter-web:$springBootVersion")
     compile("org.springframework.boot:spring-boot-starter-log4j:$springBootVersion")
+    compile("org.springframework.boot:spring-boot-starter-actuator:$springBootVersion")
 
     // Spring Cloud
     compile "org.springframework.cloud:spring-cloud-aws-context:$springCloudVersion"
