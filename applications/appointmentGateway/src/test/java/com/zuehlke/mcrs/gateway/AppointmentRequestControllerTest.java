@@ -12,6 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
@@ -44,7 +45,7 @@ public class AppointmentRequestControllerTest {
         mvc = MockMvcBuilders.webAppContextSetup(wac).build();
     }
 
-  //  @Test
+    @Test
     public void testAppointment() throws Exception {
         AppointmentRequest request = new AppointmentRequest();
         request.setRequestUser("requestUser");
@@ -52,13 +53,15 @@ public class AppointmentRequestControllerTest {
         request.setAttendees(Arrays.asList("User1", "User2"));
         request.setMinStartDate(LocalDate.of(2015,5,30));
         request.setMaxEndDate(LocalDate.of(2015,6,6));
+        request.setDurationInHours(2);
         log.info(mapper.writeValueAsString(request));
 
-        mvc.perform(MockMvcRequestBuilders.post("/appointment")
+        ResultActions perform = mvc.perform(MockMvcRequestBuilders.post("/appointment")
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(mapper.writeValueAsString(request))
-                .accept(MediaType.APPLICATION_JSON_VALUE))
-                .andExpect(status().isOk());
+                .accept(MediaType.APPLICATION_JSON_VALUE));
+
+        perform.andExpect(status().isOk());
 
     }
 }
