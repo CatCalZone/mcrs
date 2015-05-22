@@ -1,6 +1,7 @@
 ## Overview
 
-www.catcal.zone
+Website: www.catcal.zone
+Build: https://travis-ci.org/CatCalZone/mcrs
 
 ## Prerequisites
 
