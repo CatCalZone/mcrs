@@ -4,10 +4,10 @@ www.catcal.zone
 
 ## Prerequisites
 
-To run the VM only 
-* Virtual Box
-* Vagrant
-is required.
+To run the VM you need:
+* Virtual Box (https://www.virtualbox.org/)
+* Vagrant (https://www.vagrantup.com/)
+
 Windows: The devpack from https://github.com/tknerr/bills-kitchen can be used. 
 
 To run from commandline JDK 1.8 is required and $JAVA_HOME needs to be set to run gradle.
