@@ -14,11 +14,11 @@ To run from commandline JDK 1.8 is required and $JAVA_HOME needs to be set to ru
 
 ## Running the application
 
-Build all application by running ``buildAll.sh clean build`` in the 'application' folder.
-Go to 'infrastructure/vagrantLocal' and run 'vagrant up'.
+Build all application by running ``buildAll.sh clean build` in the ``application`` folder.
+Go to ``infrastructure/vagrantLocal`` and run ``vagrant up``.
 
 By Commandline: 
-Every single application can be started by 'gradlew bootRun' in the specific folders.
+Every single application can be started by ``gradlew bootRun`` in the specific folders.
 
 ## URLs
 
