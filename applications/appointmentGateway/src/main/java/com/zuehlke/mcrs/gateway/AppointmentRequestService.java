@@ -21,6 +21,7 @@ public class AppointmentRequestService {
     public AppointmentRequest createAppointmentRequest(AppointmentRequest request) {
 
         try {
+
             String message = mapper.writeValueAsString(request);
             incomingQueue.sendMessage(message);
             return request;

@@ -52,6 +52,7 @@ public class AppointmentRequest {
     public AppointmentRequest() {
         this.requestId = UUID.randomUUID().toString();
         this.creationDateTime = LocalDateTime.now();
+        this.status = "NEW";
     }
 
     @JsonProperty

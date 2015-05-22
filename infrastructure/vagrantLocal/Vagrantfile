@@ -30,7 +30,7 @@ Vagrant.configure("2") do |config|
       args: "-p 8765:8765 -v /applications:/applications --link discoveryservice:discoveryservice"
  
     d.run "statusservice",
-      args: "-v /applications:/applications --link discoveryservice:discoveryservice"
+      args: "-v /applications:/applications --link discoveryservice:discoveryservice --link theRabbit:theRabbit"
       
     d.run "appointmentgateway",
       args: "-v /applications:/applications --link discoveryservice:discoveryservice --link theRabbit:theRabbit"

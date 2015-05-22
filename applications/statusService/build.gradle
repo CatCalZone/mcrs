@@ -54,6 +54,7 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-web:$springBootVersion")
     compile("org.springframework.boot:spring-boot-starter-log4j:$springBootVersion")
     compile("org.springframework.boot:spring-boot-starter-actuator:$springBootVersion")
+    compile("org.springframework.boot:spring-boot-starter-amqp:$springBootVersion")
 
     // Spring Cloud
     compile "org.springframework.cloud:spring-cloud-aws-context:$springCloudVersion"
@@ -70,6 +71,7 @@ dependencies {
 
     compile 'com.amazonaws:aws-java-sdk-sqs:1.9.30'
 
+    compile "org.projectlombok:lombok:1.16.4"
     compile 'com.fasterxml.jackson.core:jackson-core:2.5.2'
 
 
