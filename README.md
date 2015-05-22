@@ -22,13 +22,13 @@ Every single application can be started by 'gradlew bootRun' in the specific fol
 
 ## URLs
 
-DiscoveryService dashboard: http://localhost:8761/
-RabbitMQ Management: http://localhost:15672/
+* DiscoveryService dashboard: http://localhost:8761/
+* RabbitMQ Management: http://localhost:15672/
 
-Insert an appointment request: POST: http://localhost:8765/appointment
-with body
+Insert an appointment request: 
+* POST: http://localhost:8765/appointment
 
-''
+<code>
 {
     "attendees": [
         "User1", 
@@ -41,4 +41,4 @@ with body
     "requestUser": "requestUser", 
     "title": "testRequest"
 }
-''
+</code>
