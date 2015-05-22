@@ -43,6 +43,7 @@ Insert an appointment request:
 }
 ```
 
+
 With 
 * GET: http://localhost:8765/appointment
 you can see the created messages.
