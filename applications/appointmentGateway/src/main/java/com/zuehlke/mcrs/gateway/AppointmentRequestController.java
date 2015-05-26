@@ -13,7 +13,7 @@ import javax.validation.Valid;
  * Created by dea on 17.04.15.
  */
 @RestController
-@RequestMapping("/appointment")
+@RequestMapping("/appointmentRequest")
 public class AppointmentRequestController {
 
     @Autowired

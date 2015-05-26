@@ -29,10 +29,6 @@ public class MessageSender implements Consumer<Event<AppointmentRequest>> {
     @Autowired
     ObjectMapper mapper;
 
-    @Value("${dryrun}")
-    private boolean dryrun;
-
-
     @Autowired
     private AppointmentGatewayService appointmentGatewayService;
 

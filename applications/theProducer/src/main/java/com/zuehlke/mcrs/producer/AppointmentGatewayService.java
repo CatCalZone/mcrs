@@ -12,11 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @FeignClient("appointmentGateway")
 public interface AppointmentGatewayService {
 
-    @RequestMapping(value ="/",method = RequestMethod.GET)
-    public String ping();
 
-
-    @RequestMapping(value ="/",method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public String createAppointmentRequest(@RequestBody final AppointmentRequest request);
+    @RequestMapping(value ="/appointment",method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public AppointmentRequest createAppointmentRequest(@RequestBody final AppointmentRequest request);
 
 }

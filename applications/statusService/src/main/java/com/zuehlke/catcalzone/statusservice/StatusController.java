@@ -12,7 +12,7 @@ import java.util.List;
  * Created by kinggrass on 18.05.15.
  */
 @RestController
-@RequestMapping("/appointment")
+@RequestMapping("/appointmentRequest")
 public class StatusController {
 
     @Autowired

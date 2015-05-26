@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
@@ -29,6 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = { ContextConfig.class, TestContextConfig.class})
+@ActiveProfiles("mock")
 @WebAppConfiguration
 @Log
 public class AppointmentRequestControllerTest {
@@ -58,7 +60,7 @@ public class AppointmentRequestControllerTest {
         request.setDurationInHours(2);
         log.info(mapper.writeValueAsString(request));
 
-        ResultActions perform = mvc.perform(MockMvcRequestBuilders.post("/appointment")
+        ResultActions perform = mvc.perform(MockMvcRequestBuilders.post("/appointmentRequest")
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(mapper.writeValueAsString(request))
                 .accept(MediaType.APPLICATION_JSON_VALUE));

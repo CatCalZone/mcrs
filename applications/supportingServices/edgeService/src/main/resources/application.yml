@@ -13,11 +13,11 @@ zuul:
   ignoredServices: "/**"
   routes:
     appointmentGateway:
-      path: /appointment/**
-      method: POST
-      stripPrefix: false
+          path: /appointmentRequest/**
+          method: POST
+          stripPrefix: false
     statusService:
-          path: /appointment/**
+          path: /appointmentRequest/**
           method: GET
           stripPrefix: false
 
@@ -32,6 +32,7 @@ logging:
 eureka:
    instance:
     # hostname:
+      preferIpAddress: true
       leaseRenewalIntervalInSeconds: 10
       metadataMap:
         instanceId: ${vcap.application.instance_id:${spring.application.name}:${spring.application.instance_id:${random.value}}}

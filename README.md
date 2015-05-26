@@ -27,7 +27,7 @@ Every single application can be started by ``gradlew bootRun`` in the specific f
 * RabbitMQ Management: http://localhost:15672/
 
 Insert an appointment request: 
-* POST: http://localhost:8765/appointment
+* POST: http://localhost:8765/appointmentRequest
 
 ```json
 {
@@ -46,5 +46,5 @@ Insert an appointment request:
 
 
 With 
-* GET: http://localhost:8765/appointment
+* GET: http://localhost:8765/appointmentRequest
 you can see the created messages.

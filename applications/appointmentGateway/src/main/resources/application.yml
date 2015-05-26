@@ -15,7 +15,7 @@ eureka:
     serviceUrl:
             defaultZone: http://localhost:8761/eureka/
 
-#tmp
+
 incomingAppointmentQueue: appointmentRequestQueue
 incomingAppointmentQueueHost: localhost
 ---
@@ -29,3 +29,10 @@ eureka:
         defaultZone: http://discoveryservice:8761/eureka/
 
 incomingAppointmentQueueHost: theRabbit
+
+---
+
+spring:
+    profiles: mock
+server:
+    port: 8081
