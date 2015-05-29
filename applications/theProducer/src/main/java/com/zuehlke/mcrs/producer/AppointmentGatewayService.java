@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 /**
  * Created by kinggrass on 22.04.15.
  */
-@FeignClient("appointmentGateway")
+@FeignClient("appointmentgateway")
 public interface AppointmentGatewayService {
 
 
-    @RequestMapping(value ="/appointment",method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value ="/appointmentRequest",method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public AppointmentRequest createAppointmentRequest(@RequestBody final AppointmentRequest request);
 
 }

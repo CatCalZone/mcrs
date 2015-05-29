@@ -3,9 +3,12 @@ package com.zuehlke.catcalzone.statusservice;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.java.Log;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.util.logging.Level;
 
@@ -18,6 +21,9 @@ public class AppointmentRequestQueueListener {
 
     @Autowired
     private  AppointmentRequestStore store;
+
+    @Value("${incomingAppointmentQueue:appointmentRequestQueue}")
+    private String appointmentRequestQueue;
 
 
     @Autowired

@@ -1,12 +1,15 @@
 Vagrant.configure("2") do |config|
   config.vm.box = "chef/ubuntu-14.04"
   config.vm.synced_folder "../../applications", "/applications", create: true
+  config.vm.synced_folder "../../websites", "/websites", create: true
+  config.vm.synced_folder "../../websites/testingApp", "/vagrant/testingApp/testingApp", create: true
   config.vm.network "forwarded_port", guest: 8761, host: 8761 # discoveryService (Eureka server)
   config.vm.network "forwarded_port", guest: 8765, host: 8765 # edgeService (Zuul proxy)
   #config.vm.network "forwarded_port", guest: 8888, host: 8888 # config server
   config.vm.network "forwarded_port", guest: 9324, host: 9324 # elasticMQ
   config.vm.network "forwarded_port", guest: 5672, host: 5672 # rabbitMQ  
   config.vm.network "forwarded_port", guest: 15672, host: 15672 # rabbitMQ management console
+  config.vm.network "forwarded_port", guest: 8080, host: 18080 # nginx
 
   config.vm.provider "virtualbox" do |v|
     v.memory = 2048
@@ -18,6 +21,7 @@ Vagrant.configure("2") do |config|
     d.build_image "--tag=edgeservice /vagrant/edgeService"
     d.build_image "--tag=statusservice /vagrant/statusService"
     d.build_image "--tag=appointmentgateway /vagrant/appointmentGateway"
+    d.build_image "--tag=testingapp /vagrant/testingApp"
     #d.build_image "--tag=configsrv /vagrant/configsrv"
     
     d.run "discoveryservice",
@@ -34,6 +38,9 @@ Vagrant.configure("2") do |config|
       
     d.run "appointmentgateway",
       args: "-v /applications:/applications --link discoveryservice:discoveryservice --link theRabbit:theRabbit"
+
+    d.run "testingapp",
+      args: "-p 8080:80 --link edgeservice:edgeservice"
 
    # d.run "configsrv",
    #   args: "-p 8888:8888 -v /applications:/applications"

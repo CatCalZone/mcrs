@@ -14,8 +14,7 @@ import java.util.UUID;
 @Component
 public class AppointmentCreator {
 
-    @Autowired
-    private RandomMobileNumber randomMobileNumber;
+
     public AppointmentRequest newMessage() {
         AppointmentRequest appointmentRequest = new AppointmentRequest();
         appointmentRequest.setRequestUser("User" + UUID.randomUUID());
