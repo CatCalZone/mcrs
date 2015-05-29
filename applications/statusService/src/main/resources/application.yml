@@ -27,3 +27,11 @@ eureka:
         defaultZone: http://discoveryservice:8761/eureka/
 
 incomingAppointmentQueueHost: theRabbit
+
+
+---
+
+spring:
+    profiles: mock
+server:
+  port: 8082

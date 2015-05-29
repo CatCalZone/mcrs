@@ -57,6 +57,12 @@ repositories {
     maven { url "https://repo.spring.io/libs-snapshot" }
 }
 
+bootRun {
+    println "---- setting spring active profile: queue ------------"
+    environment "spring.profiles.active", "queue"
+}
+
+
 dependencies {
 
     // Spring Boot

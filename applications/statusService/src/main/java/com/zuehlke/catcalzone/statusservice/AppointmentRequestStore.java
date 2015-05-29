@@ -12,13 +12,13 @@ import java.util.List;
 @Service
 public class AppointmentRequestStore {
 
-    List<String> requests = new ArrayList<>();
+    List<AppointmentRequest> requests = new ArrayList<>();
 
-    public void storeRequest(String request) {
+    public void storeRequest(AppointmentRequest request) {
         requests.add(request);
     }
 
-    public List<String> getRequests() {
+    public List<AppointmentRequest> getRequests() {
         return Collections.unmodifiableList(requests);
     }
 

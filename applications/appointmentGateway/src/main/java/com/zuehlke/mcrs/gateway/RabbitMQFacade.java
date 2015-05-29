@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Log
-@Profile("queue")
+@Profile({"docker","queue"})
 public class RabbitMQFacade implements IncomingAppointmentRequestQueue {
 
     @Autowired

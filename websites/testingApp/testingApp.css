@@ -1,0 +1,12 @@
+form ul {
+    display: table;
+}
+
+form li {
+    display: table-row;
+}
+
+form li div {
+    display: table-cell;
+
+}
