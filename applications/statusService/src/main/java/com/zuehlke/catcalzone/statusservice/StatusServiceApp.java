@@ -1,8 +1,7 @@
 package com.zuehlke.catcalzone.statusservice;
 
 import com.rabbitmq.client.AMQP;
-import org.springframework.amqp.core.AmqpAdmin;
-import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.amqp.rabbit.annotation.RabbitListenerConfigurer;
 import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
@@ -33,7 +32,7 @@ public class StatusServiceApp  {
     @Value("${incomingAppointmentQueueHost}")
     private String queueHost;
 
-    @Value("${incomingAppointmentQueue:appointmentRequestQueue}")
+    @Value("${incomingAppointmentQueue}")
     private String appointmentRequestQueue;
 
     @Bean
@@ -41,12 +40,25 @@ public class StatusServiceApp  {
         CachingConnectionFactory connectionFactory =
                 new CachingConnectionFactory(queueHost);
 
-        AmqpAdmin admin = new RabbitAdmin(connectionFactory);
-        admin.declareQueue(new Queue(appointmentRequestQueue));
 
         return connectionFactory;
     }
 
+    @Bean
+    Queue queue() {
+        return new Queue(appointmentRequestQueue, false);
+    }
+
+
+    @Bean
+    TopicExchange exchange() {
+        return new TopicExchange(appointmentRequestQueue+"-exchange");
+    }
+
+    @Bean
+    Binding binding(Queue queue, TopicExchange exchange) {
+        return BindingBuilder.bind(queue).to(exchange).with(appointmentRequestQueue);
+    }
 
 
     public static void main(String[] args) {

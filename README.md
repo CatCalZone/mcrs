@@ -25,6 +25,9 @@ Every single application can be started by ``gradlew bootRun`` in the specific f
 
 * DiscoveryService dashboard: http://localhost:8761/
 * RabbitMQ Management: http://localhost:15672/
+* testingApp: http://localhost:8765/testingapp/ 
+
+Use the testingApp to send requests to the appointmentGateway and to retrieve the messages from the statusservice.
 
 Insert an appointment request: 
 * POST: http://localhost:8765/appointmentRequest

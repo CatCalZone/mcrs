@@ -20,6 +20,10 @@ zuul:
           path: /appointmentRequest/**
           method: GET
           stripPrefix: false
+    testingapp:
+          path: /testingapp/**
+          stripPrefix: false
+          url: http://testingapp
 
 server:
   port: 8765

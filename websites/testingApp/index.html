@@ -4,19 +4,23 @@
     <title>CatCal Zone TestingApp</title>
     <link rel="stylesheet" href="testingApp.css"/>
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css"/>
-    <link rel="stylesheet" href="bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" />
+    <link rel="stylesheet"
+          href="bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css"/>
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
     <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="bower_components/angular/angular.js"></script>
     <script type="text/javascript" src="bower_components/moment/min/moment.min.js"></script>
     <script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+    <script type="text/javascript"
+            src="bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
 
     <script src="js/testingAppControllers.js"></script>
 </head>
 <body>
 <div class="page-header">
-    <h1>CatCalZone<small> TestingApp</small></h1>
+    <h1>CatCalZone
+        <small> TestingApp</small>
+    </h1>
 </div>
 <div class="container-fluid">
 
@@ -26,6 +30,7 @@
 
         <div class="col-md-4" ng-controller="AppointmentRequestCtrl">
             <h3>Create a new appointment request</h3>
+
             <form class="simple-form" name="requestForm">
 
                 <div class="form-group">
@@ -46,8 +51,10 @@
                 </div>
                 <div class="form-group">
                     <label for="minStartDateTimeStamp">Start Date</label>
-                    <div class='input-group date' id="minStartDateTimeStampDatePicker" >
-                        <input id="minStartDateTimeStamp" type='text' class="form-control" ng-model="appointmentRequest.minStartDateTimeStamp"/>
+
+                    <div class='input-group date' id="minStartDateTimeStampDatePicker">
+                        <input id="minStartDateTimeStamp" type='text' class="form-control"
+                               ng-model="appointmentRequest.minStartDateTimeStamp"/>
                         <span class="input-group-addon">
                             <span class="glyphicon glyphicon-calendar"></span>
                         </span>
@@ -62,8 +69,10 @@
                 </script>
                 <div class="form-group">
                     <label for="maxEndDateTimeStamp">End Date</label>
-                    <div class='input-group date' id="maxEndDateTimeStampDatePicker" >
-                        <input id="maxEndDateTimeStamp" type='text' class="form-control" ng-model="appointmentRequest.maxEndDateTimeStamp"/>
+
+                    <div class='input-group date' id="maxEndDateTimeStampDatePicker">
+                        <input id="maxEndDateTimeStamp" type='text' class="form-control"
+                               ng-model="appointmentRequest.maxEndDateTimeStamp"/>
                         <span class="input-group-addon">
                             <span class="glyphicon glyphicon-calendar"></span>
                         </span>
@@ -78,14 +87,19 @@
                 </script>
 
                 <div class="form-group">
-                    <input type="submit" class="form-control btn btn-primary" ng-click="createNewAppointmentRequest(appointmentRequest)"
+                    <input type="submit" class="form-control btn btn-primary"
+                           ng-click="createNewAppointmentRequest(appointmentRequest)"
                            value="Create"/>
                 </div>
             </form>
         </div>
 
         <div class="col-md-8" ng-controller="AppointmentRequestListCtrl">
-            <h3>Appointment requests <button data-toggle="button" aria-pressed="true"  title="Toggle automatic request pull" id="toggleReloadButton" ng-click="toggleReload()" class="btn btn-default active glyphicon glyphicon-refresh"></button></h3>
+            <h3>Appointment requests
+                <button data-toggle="button" aria-pressed="true" title="Toggle automatic request pull"
+                        id="toggleReloadButton" ng-click="toggleReload()"
+                        class="btn btn-default active glyphicon glyphicon-refresh"></button>
+            </h3>
             <table class="table table-striped">
                 <thead>
                 <tr>
@@ -106,7 +120,7 @@
                     <td>{{request.durationInHours}}</td>
                     <td>{{request.minStartDateTimeStamp * 1000| date:'dd.MM.yyyy'}}</td>
                     <td>{{request.maxEndDateTimeStamp * 1000| date:'dd.MM.yyyy'}}</td>
-                    <td>{{request.creationDateTimeStamp  * 1000| date:'dd.MM.yyyy HH:mm'}}</td>
+                    <td>{{request.creationDateTimeStamp * 1000| date:'dd.MM.yyyy HH:mm'}}</td>
                 </tr>
                 </tbody>
             </table>
