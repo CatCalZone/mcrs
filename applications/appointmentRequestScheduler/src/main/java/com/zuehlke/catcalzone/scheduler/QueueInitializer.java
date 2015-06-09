@@ -1,9 +1,10 @@
-package com.zuehlke.catcalzone.statusservice;
+package com.zuehlke.catcalzone.scheduler;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import javax.inject.Named;
 import java.util.List;
 
 /**
@@ -20,7 +21,8 @@ public class QueueInitializer {
 
         queueList.stream().forEach(
                 queue ->
-                        queue.sendMessage("ping")
+                queue.sendMessage("ping")
         );
     }
+
 }

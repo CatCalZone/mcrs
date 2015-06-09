@@ -1,4 +1,4 @@
-package com.zuehlke.catcalzone.statusservice;
+package com.zuehlke.catcalzone.scheduler;
 
 import lombok.extern.java.Log;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;

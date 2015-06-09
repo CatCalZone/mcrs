@@ -35,6 +35,21 @@ public class StatusServiceApp  {
     @Value("${incomingAppointmentQueue}")
     private String appointmentRequestQueue;
 
+    @Bean(name = "incomingAppointmentQueue")
+    public AppointmentRequestQueue initIncomingAppointmentRequestQueue(@Value("${incomingAppointmentQueue}") String name) {
+        return new RabbitMQFacade(name);
+    }
+
+    @Bean(name = "slotFoundQueue")
+    public AppointmentRequestQueue initSlotFoundQueue(@Value("${incomingAppointmentQueue}") String name) {
+        return new RabbitMQFacade(name);
+    }
+
+    @Bean(name = "noSlotFoundQueue")
+    public AppointmentRequestQueue initNoSlotFoundQueue(@Value("${incomingAppointmentQueue}") String name) {
+        return new RabbitMQFacade(name);
+    }
+
     @Bean
     public ConnectionFactory connectionFactory() {
         CachingConnectionFactory connectionFactory =

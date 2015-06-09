@@ -1,5 +1,5 @@
 info:
-  component: Appointment Scheduler
+  component: Appointment Request Scheduler
 
 server:
   port: 0
@@ -13,3 +13,19 @@ eureka:
 
 #tmp
 incomingAppointmentQueue: appointmentRequestQueue
+slotFoundQueue: slotFoundQueue
+noSlotFoundQueue: noSlotFoundQueue
+incomingAppointmentQueueHost: localhost
+
+
+---
+
+spring:
+    profiles: docker
+
+eureka:
+  client:
+      serviceUrl:
+        defaultZone: http://discoveryservice:8761/eureka/
+
+incomingAppointmentQueueHost: theRabbit

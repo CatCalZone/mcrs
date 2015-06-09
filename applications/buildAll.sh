@@ -12,6 +12,7 @@ applications[1]=supportingServices/mcrs-config
 applications[2]=supportingServices/edgeService
 applications[3]=appointmentGateway
 applications[4]=theProducer
+applications[5]=appointmentRequestScheduler
 
 for i in ${applications[@]}; do
      
