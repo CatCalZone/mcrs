@@ -1,3 +1,12 @@
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'spring-boot'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
 ext {
     slf4jVersion = '1.7.10'
     logbackVersion = '1.1.2'
@@ -6,10 +15,12 @@ ext {
     springCloudVersion = '1.0.1.RELEASE'
     spockVersion = '0.7-groovy-2.0'
 
-    sourceCompatibility = 1.8
-    targetCompatibility = 1.8
+  
 }
 
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.4'
+}
 
 
 buildscript {
@@ -22,10 +33,6 @@ buildscript {
     }
 }
 
-apply plugin: 'java'
-apply plugin: 'eclipse'
-apply plugin: 'idea'
-apply plugin: 'spring-boot'
 
 configurations.all {
     resolutionStrategy {

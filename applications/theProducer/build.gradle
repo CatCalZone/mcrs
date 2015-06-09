@@ -1,16 +1,25 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'spring-boot'
+
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+
 ext {
     reactorVersion = '2.0.1.BUILD-SNAPSHOT'
     springVersion = '4.1.6.RELEASE'
     springBootVersion = '1.2.3.RELEASE'
     springCloudVersion = '1.0.1.RELEASE'
 
-    sourceCompatibility = 1.8
-    targetCompatibility = 1.8
+    
 }
 
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.0'
+    gradleVersion = '2.4'
 }
 
 configurations.all {
@@ -34,10 +43,7 @@ buildscript {
     }
 }
 
-apply plugin: 'java'
-apply plugin: 'eclipse'
-apply plugin: 'idea'
-apply plugin: 'spring-boot'
+
 
 jar {
     baseName = 'theProducer'
