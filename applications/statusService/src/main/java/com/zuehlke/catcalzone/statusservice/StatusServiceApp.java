@@ -61,18 +61,18 @@ public class StatusServiceApp  {
 
     @Bean
     Queue queue() {
-        return new Queue(appointmentRequestQueue, false);
+        return new Queue(appointmentRequestQueue+"-statusService", false);
     }
 
 
     @Bean
-    TopicExchange exchange() {
-        return new TopicExchange(appointmentRequestQueue+"-exchange");
+    FanoutExchange exchange() {
+        return new FanoutExchange(appointmentRequestQueue+"-exchange");
     }
 
     @Bean
-    Binding binding(Queue queue, TopicExchange exchange) {
-        return BindingBuilder.bind(queue).to(exchange).with(appointmentRequestQueue);
+    Binding binding(Queue queue, FanoutExchange exchange) {
+        return BindingBuilder.bind(queue).to(exchange);
     }
 
 

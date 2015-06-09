@@ -28,7 +28,8 @@ public class RabbitMQFacade implements IncomingAppointmentRequestQueue {
     @Override
     public void sendMessage(String json) {
         if (sendToQueue) {
-            rabbitTemplate.convertAndSend(queueName, json);
+            rabbitTemplate.setExchange(queueName + "-exchange");
+            rabbitTemplate.convertAndSend(json);
         } else {
             log.info("Not send to queue: " +json);
         }

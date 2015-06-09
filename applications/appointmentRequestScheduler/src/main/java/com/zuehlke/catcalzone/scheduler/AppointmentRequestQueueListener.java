@@ -25,7 +25,7 @@ public class AppointmentRequestQueueListener {
     @Autowired
     ObjectMapper mapper;
 
-    @RabbitListener(queues = "appointmentRequestQueue")
+    @RabbitListener(queues = "appointmentRequestQueue-scheduler")
     public void processMessage(String data) {
         log.info("From queue" + data);
         try {

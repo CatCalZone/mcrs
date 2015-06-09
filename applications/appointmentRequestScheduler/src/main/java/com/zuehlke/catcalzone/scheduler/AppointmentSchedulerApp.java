@@ -1,10 +1,7 @@
 package com.zuehlke.catcalzone.scheduler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.amqp.core.Binding;
-import org.springframework.amqp.core.BindingBuilder;
-import org.springframework.amqp.core.Queue;
-import org.springframework.amqp.core.TopicExchange;
+import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -67,18 +64,18 @@ public class AppointmentSchedulerApp {
 
     @Bean
     Queue queue() {
-        return new Queue(queueName, false);
+        return new Queue(queueName+"-scheduler", false);
     }
 
 
     @Bean
-    TopicExchange exchange() {
-        return new TopicExchange(queueName + "-exchange");
+    FanoutExchange exchange() {
+        return new FanoutExchange(queueName + "-exchange");
     }
 
     @Bean
-    Binding binding(Queue queue, TopicExchange exchange) {
-        return BindingBuilder.bind(queue).to(exchange).with(queueName);
+    Binding binding(Queue queue, FanoutExchange exchange) {
+        return BindingBuilder.bind(queue).to(exchange);
     }
 
 

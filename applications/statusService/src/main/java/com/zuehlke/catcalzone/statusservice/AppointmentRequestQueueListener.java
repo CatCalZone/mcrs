@@ -29,12 +29,13 @@ public class AppointmentRequestQueueListener {
     @Autowired
     ObjectMapper mapper;
 
-    @RabbitListener(queues = "appointmentRequestQueue")
+    @RabbitListener(queues = "appointmentRequestQueue-statusService")
     public void processMessage(String data) {
         log.info("From queue" + data);
         try {
             store.storeRequest(mapper.readValue(data, AppointmentRequest.class));
         } catch (IOException e) {
+            e.printStackTrace();
             log.info("Could not read message " + data + "! Ingoring it!");
         }
     }
