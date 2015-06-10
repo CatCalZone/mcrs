@@ -18,6 +18,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
+import javax.inject.Named;
 import java.io.IOException;
 
 /**
@@ -27,7 +28,7 @@ import java.io.IOException;
 @EnableEurekaClient
 @EnableRabbit
 @EnableScheduling
-public class StatusServiceApp  {
+public class StatusServiceApp {
 
     @Value("${incomingAppointmentQueueHost}")
     private String queueHost;
@@ -35,45 +36,79 @@ public class StatusServiceApp  {
     @Value("${incomingAppointmentQueue}")
     private String appointmentRequestQueue;
 
-    @Bean(name = "incomingAppointmentQueue")
-    public AppointmentRequestQueue initIncomingAppointmentRequestQueue(@Value("${incomingAppointmentQueue}") String name) {
-        return new RabbitMQFacade(name);
-    }
+    @Value("${slotFoundQueue}")
+    private String slotFoundQueue;
 
-    @Bean(name = "slotFoundQueue")
-    public AppointmentRequestQueue initSlotFoundQueue(@Value("${incomingAppointmentQueue}") String name) {
-        return new RabbitMQFacade(name);
-    }
+    @Value("${noSlotFoundQueue}")
+    private String noSlotFoundQueue;
 
-    @Bean(name = "noSlotFoundQueue")
-    public AppointmentRequestQueue initNoSlotFoundQueue(@Value("${incomingAppointmentQueue}") String name) {
-        return new RabbitMQFacade(name);
-    }
+    @Value("${queue_postfix}")
+    private String queuePostfix;
+
+    @Value("${exchange_postfix}")
+    private String exchangePostfix;
 
     @Bean
     public ConnectionFactory connectionFactory() {
         CachingConnectionFactory connectionFactory =
                 new CachingConnectionFactory(queueHost);
-
-
         return connectionFactory;
     }
 
-    @Bean
-    Queue queue() {
-        return new Queue(appointmentRequestQueue+"-statusService", false);
+    /* incomingAppointmentQueue  */
+
+    @Bean(name = "incomingAppointmentQueue")
+    Queue incomingAppointmentQueue() {
+        return new Queue(appointmentRequestQueue + queuePostfix, false);
     }
 
 
-    @Bean
-    FanoutExchange exchange() {
-        return new FanoutExchange(appointmentRequestQueue+"-exchange");
+    @Bean(name = "incomingAppointmentExchange")
+    FanoutExchange incomingAppointmentExchange() {
+        return new FanoutExchange(appointmentRequestQueue + exchangePostfix);
     }
 
-    @Bean
-    Binding binding(Queue queue, FanoutExchange exchange) {
+    @Bean(name = "incomingAppointmentQueueBinding")
+    Binding incomingAppointmentQueueBinding(@Named("incomingAppointmentQueue") Queue queue, @Named("incomingAppointmentExchange") FanoutExchange exchange) {
         return BindingBuilder.bind(queue).to(exchange);
     }
+
+    /* slotFoundQueue */
+
+    @Bean(name = "slotFoundQueue")
+    Queue slotFoundQueue() {
+        return new Queue(slotFoundQueue + queuePostfix, false);
+    }
+
+    @Bean(name = "slotFoundExchange")
+    FanoutExchange slotFoundExchange() {
+        return new FanoutExchange(slotFoundQueue + exchangePostfix);
+    }
+
+    @Bean(name = "slotFoundQueueBinding")
+    Binding slotFoundBinding(@Named("slotFoundQueue") Queue queue, @Named("slotFoundExchange") FanoutExchange exchange) {
+        return BindingBuilder.bind(queue).to(exchange);
+    }
+
+
+    /* noSlotFoundQueue */
+
+    @Bean(name = "noSlotFoundQueue")
+    Queue noSlotFoundQueue() {
+        return new Queue(noSlotFoundQueue + queuePostfix, false);
+    }
+
+    @Bean(name = "noSlotFoundExchange")
+    FanoutExchange noSlotFoundExchange() {
+        return new FanoutExchange(noSlotFoundQueue + exchangePostfix);
+    }
+
+    @Bean(name = "noSlotFoundQueueBinding")
+    Binding noSlotFoundQueueBinding(@Named("noSlotFoundQueue") Queue queue, @Named("noSlotFoundExchange") FanoutExchange exchange) {
+        return BindingBuilder.bind(queue).to(exchange);
+    }
+
+    /* queue definitions end */
 
 
     public static void main(String[] args) {

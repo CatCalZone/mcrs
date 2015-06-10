@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 /**
  * Created by kinggrass on 21.05.15.
  */
-@Component
 @Log
 @Profile({"docker","queue"})
 public class RabbitMQFacade implements AppointmentRequestQueue {
@@ -30,7 +29,8 @@ public class RabbitMQFacade implements AppointmentRequestQueue {
     @Override
     public void sendMessage(String json) {
         if (sendToQueue) {
-            rabbitTemplate.convertAndSend(queueName, json);
+            rabbitTemplate.setExchange(queueName);
+            rabbitTemplate.convertAndSend(json);
         } else {
             log.info("Not send to queue: " +json);
         }

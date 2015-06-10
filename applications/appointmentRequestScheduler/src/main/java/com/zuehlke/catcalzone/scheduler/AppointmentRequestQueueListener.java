@@ -16,16 +16,13 @@ import java.io.IOException;
 @Log
 public class AppointmentRequestQueueListener {
 
-    @Value("${incomingAppointmentQueue:appointmentRequestQueue}")
-    private String appointmentRequestQueue;
-
     @Autowired
     private AppointmentRequestProcessor requestProcessor;
 
     @Autowired
     ObjectMapper mapper;
 
-    @RabbitListener(queues = "appointmentRequestQueue-scheduler")
+    @RabbitListener(queues = "appointmentRequestQueue-schedulerservice")
     public void processMessage(String data) {
         log.info("From queue" + data);
         try {

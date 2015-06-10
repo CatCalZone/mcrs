@@ -2,9 +2,7 @@ package com.zuehlke.catcalzone.statusservice;
 
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by kinggrass on 22.05.15.
@@ -12,14 +10,14 @@ import java.util.List;
 @Service
 public class AppointmentRequestStore {
 
-    List<AppointmentRequest> requests = new ArrayList<>();
+    Map<String,AppointmentRequest> requests = new LinkedHashMap<>();
 
     public void storeRequest(AppointmentRequest request) {
-        requests.add(request);
+        requests.put(request.getRequestId(), request);
     }
 
-    public List<AppointmentRequest> getRequests() {
-        return Collections.unmodifiableList(requests);
+    public Collection<AppointmentRequest> getRequests() {
+        return Collections.unmodifiableCollection(requests.values());
     }
 
 }

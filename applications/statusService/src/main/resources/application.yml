@@ -17,6 +17,8 @@ eureka:
 incomingAppointmentQueue: appointmentRequestQueue
 slotFoundQueue: slotFoundQueue
 noSlotFoundQueue: noSlotFoundQueue
+queue_postfix: -statusservice
+exchange_postfix: -exchange
 incomingAppointmentQueueHost: localhost
 
 ---

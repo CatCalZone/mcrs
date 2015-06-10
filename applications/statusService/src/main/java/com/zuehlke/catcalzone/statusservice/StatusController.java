@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -22,7 +23,7 @@ public class StatusController {
     private AppointmentRequestStore requestStore;
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<AppointmentRequest> getStatus() {
+    public Collection<AppointmentRequest> getStatus() {
         return requestStore.getRequests();
     }
 
