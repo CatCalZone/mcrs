@@ -2,6 +2,8 @@ package com.zuehlke.mcrs.gateway.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.wordnik.swagger.annotations.ApiModel;
+import com.wordnik.swagger.annotations.ApiModelProperty;
 import com.zuehlke.mcrs.gateway.model.Slot;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,14 +22,17 @@ import java.util.UUID;
  * Created by kinggrass on 17.04.15.
  */
 @Data
+@ApiModel(description = "this is the model of the appointment request")
 public class AppointmentRequest {
 
     private String requestId;
 
     @NotNull
+    @ApiModelProperty("Every appointment needs a title")
     private String title;
 
     @NotNull
+    @ApiModelProperty("Every appointment needs a user who requested it")
     private String requestUser;
 
     @NotNull
@@ -38,9 +43,11 @@ public class AppointmentRequest {
     private LocalDateTime creationDateTime;
 
     @JsonIgnore
+    @ApiModelProperty(hidden = true)
     private LocalDate minStartDate;
 
     @JsonIgnore
+    @ApiModelProperty(hidden = true)
     private LocalDate maxEndDate;
 
     @NotNull

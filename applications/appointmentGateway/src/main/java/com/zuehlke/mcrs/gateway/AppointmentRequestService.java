@@ -6,6 +6,8 @@ import com.zuehlke.mcrs.gateway.model.AppointmentRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.inject.Named;
+
 /**
  * Created by kinggrass on 17.04.15.
  */
