@@ -1,6 +1,7 @@
 package com.zuehlke.catcalzone.calendarservice;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +22,7 @@ import org.junit.BeforeClass;
 import org.junit.AfterClass;
 
 import com.zuehlke.catcalzone.calendarservice.model.Block;
+import com.zuehlke.catcalzone.calendarservice.model.BlocksRequest;
 import com.zuehlke.catcalzone.calendarservice.model.CalendarBlocks;
 
 public class CalendarTest extends Assert {
@@ -57,15 +59,20 @@ public class CalendarTest extends Assert {
 		WebClient client = WebClient.create(ENDPOINT_ADDRESS, Collections.singletonList(new MOXyJsonProvider()));
 		WebClient.getConfig(client).getRequestContext()
 				.put(LocalConduit.DIRECT_DISPATCH, Boolean.TRUE);
-
 		client.accept(MediaType.APPLICATION_JSON);
+		client.type(MediaType.APPLICATION_JSON);
 		client.path("blocks");
-		Response result = client.post(null);
+		
+		BlocksRequest req = new BlocksRequest();
+		req.setItems(Arrays.asList(new BlocksRequest.Calendar("x1"), new BlocksRequest.Calendar("x2")));
+		
+		Response result = client.post(req);
 		assertNotNull(result);
 		assertEquals(200, result.getStatus());
 		List<CalendarBlocks> data = result.readEntity(new GenericType<ArrayList<CalendarBlocks>>(){});
-		assertEquals(1, data.size());
-		assertEquals("cal1", data.get(0).getCalendarId());
+		assertEquals(2, data.size());
+		assertEquals("x1", data.get(0).getCalendarId());
+		assertEquals("x2", data.get(1).getCalendarId());
 	}
 
 }
