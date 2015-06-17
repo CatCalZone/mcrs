@@ -1,18 +1,39 @@
 apply plugin: 'java'
-apply plugin: 'application'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'war'
+apply plugin: 'eclipse-wtp'
 
-mainClassName = 'CalendarQuickstart'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 version = '1.0'
 
 repositories {
     mavenCentral()
+    mavenLocal()
+    maven { url "https://repo.spring.io/libs-snapshot" }
+}
+
+jar {
+    baseName = 'calendarService'
+    version =  '0.1.0'
+}
+
+test {
 }
 
 dependencies {
     compile 'com.google.api-client:google-api-client:1.20.0'
     compile 'com.google.oauth-client:google-oauth-client-jetty:1.20.0'
     compile 'com.google.apis:google-api-services-calendar:v3-rev125-1.20.0'
+    compile 'javax.ejb:javax.ejb-api:3.2'
+    compile 'javax.ws.rs:javax.ws.rs-api:2.0.1' 
+    compile "org.projectlombok:lombok:1.16.4"
+    compile "com.sun.jersey:jersey-json:2.18"
+    compile "org.glassfish.jersey.media:jersey-media-moxy:2.18"
     
+    testCompile "org.apache.cxf:cxf-rt-transports-local:3.1.1"
+    testCompile "org.apache.cxf:cxf-rt-frontend-jaxrs:3.1.1"
+    testCompile "junit:junit:4.11"
+    testCompile "org.apache.cxf:cxf-rt-rs-client:3.1.1"
 }
