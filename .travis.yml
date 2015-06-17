@@ -1,4 +1,4 @@
-script: ./applications/buildAll.sh clean build
+script: ./applications/buildAll.sh clean build --debug
 
 addons:
   artifacts: true
