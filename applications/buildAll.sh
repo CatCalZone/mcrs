@@ -19,6 +19,8 @@ for i in ${applications[@]}; do
      
 	echo "building $i"
 	cd $i && ./gradlew $1 $2 $3 $4
+	mkdir $BASE_DIR/../infrastructure/aws/$i
+	cp build/libs/*.jar $BASE_DIR/../infrastructure/aws/$i/
 	cd $BASE_DIR
 
 done

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html ng-app="testingApp">
+<head>
+    <title>CatCal Zone TestingApp</title>
+    <link rel="stylesheet" href="testingApp.css"/>
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css"/>
+    <link rel="stylesheet"
+          href="bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css"/>
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script type="text/javascript" src="bower_components/moment/min/moment.min.js"></script>
+    <script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript"
+            src="bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+
+    <script src="js/testingAppControllers.js"></script>
+</head>
+<body>
+<div class="page-header">
+    <h1>CatCalZone
+        <small> TestingApp</small>
+    </h1>
+</div>
+<div class="container-fluid">
+
+
+    <div class="row">
+
+
+        <div class="col-md-4" ng-controller="AppointmentRequestCtrl">
+            <h3>Create a new appointment request</h3>
+
+            <form class="simple-form" name="requestForm">
+
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input id="title" class="form-control" ng-model="appointmentRequest.title" type="text"/>
+                </div>
+                <div class="form-group">
+                    <label for="user">User</label>
+                    <input id="user" class="form-control" ng-model="appointmentRequest.requestUser" type="text"/>
+                </div>
+                <div class="form-group">
+                    <label for="attendees">Attendees</label>
+                    <input id="attendees" class="form-control" ng-model="appointmentRequest.attendees" type="text">
+                </div>
+                <div class="form-group">
+                    <label for="duration">Duration</label>
+                    <input id="duration" class="form-control" ng-model="appointmentRequest.durationInHours" type="text">
+                </div>
+                <div class="form-group">
+                    <label for="minStartDateTimeStamp">Start Date</label>
+
+                    <div class='input-group date' id="minStartDateTimeStampDatePicker">
+                        <input id="minStartDateTimeStamp" type='text' class="form-control"
+                               ng-model="appointmentRequest.minStartDateTimeStamp"/>
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+                <script type="text/javascript">
+                    $(function () {
+                        $('#minStartDateTimeStampDatePicker').datetimepicker({
+                            format: 'DD.MM.YYYY'
+                        });
+                    });
+                </script>
+                <div class="form-group">
+                    <label for="maxEndDateTimeStamp">End Date</label>
+
+                    <div class='input-group date' id="maxEndDateTimeStampDatePicker">
+                        <input id="maxEndDateTimeStamp" type='text' class="form-control"
+                               ng-model="appointmentRequest.maxEndDateTimeStamp"/>
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+                <script type="text/javascript">
+                    $(function () {
+                        $('#maxEndDateTimeStampDatePicker').datetimepicker({
+                            format: 'DD.MM.YYYY'
+                        });
+                    });
+                </script>
+
+                <div class="form-group">
+                    <input type="submit" class="form-control btn btn-primary"
+                           ng-click="createNewAppointmentRequest(appointmentRequest)"
+                           value="Create"/>
+                </div>
+            </form>
+        </div>
+
+        <div class="col-md-8" ng-controller="AppointmentRequestListCtrl">
+            <h3>Appointment requests
+                <button data-toggle="button" aria-pressed="true" title="Toggle automatic request pull"
+                        id="toggleReloadButton" ng-click="toggleReload()"
+                        class="btn btn-default active glyphicon glyphicon-refresh"></button>
+            </h3>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Requester</th>
+                    <th>Attendees</th>
+                    <th>Duration</th>
+                    <th>Min start time</th>
+                    <th>Max end time</th>
+                    <th>Status</th>
+                    <th>Created</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="request in requests | orderBy:'-creationDateTimeStamp' | limitTo: 15">
+                    <td>{{request.title}}</td>
+                    <td>{{request.requestUser}}</td>
+                    <td>{{request.attendees}}</td>
+                    <td>{{request.durationInHours}}</td>
+                    <td>{{request.minStartDateTimeStamp * 1000| date:'dd.MM.yyyy'}}</td>
+                    <td>{{request.maxEndDateTimeStamp * 1000| date:'dd.MM.yyyy'}}</td>
+                    <td>{{request.status}}</td>
+                    <td>{{request.creationDateTimeStamp * 1000| date:'dd.MM.yyyy HH:mm'}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

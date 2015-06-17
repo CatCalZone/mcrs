@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:ng="http://angularjs.org" id="ng-app" data-ng-app='demo'>
+<head>
+    <title>Angular Bootstrap3 Datepicker Demo</title>
+    <link rel='stylesheet' href='css/bootstrap.css'>
+    <link rel='stylesheet' href='css/ng-bs3-datepicker.css'>
+    <link rel='stylesheet' href='css/font-awesome.css'>
+
+</head>
+<body>
+    <div>
+        <div data-ng-controller='AppCtrl'>
+
+            <div class='form-group'>
+              <label>A date with french canadian language</label>
+              <ng-bs3-datepicker id="date1" data-ng-model='date1' language="fr-ca" date-format="YYYY-MMMM-DD"/>
+            </div>
+
+            <div class='form-group'>
+              <label>A date in canadian english</label>
+              <ng-bs3-datepicker id="date2" data-ng-model='date2' language="en-ca"/>
+            </div>
+            <div class='form-group'>
+              <label>A simple date with another format</label>
+              <ng-bs3-datepicker id="date3" data-ng-model='date3' language="fr-ca" date-format="DD/MM/YYYY"/>
+            </div>
+            {{test = 'en-ca'}}
+            <div class='form-group'>
+              <label>A date in canadian english using an expression</label>
+              <ng-bs3-datepicker id="date2" data-ng-model='date4' language="test"/>
+            </div>
+
+        </div>
+    </div>
+
+    <script src='js/jquery.js'></script>
+    <script src='js/bootstrap.js'></script>
+    <script src='js/angular.js'></script>
+    <script src='js/moment.js'></script>
+    <script src='js/fr-ca.js' charset='utf-8'></script>
+    <script src='js/ng-bs3-datepicker.js' charset='utf-8'></script>
+    <script type='application/javascript'>
+        var app = angular.module('demo', ['ng-bs3-datepicker']);
+        app.controller('AppCtrl', function($scope){
+          console.log("hey")
+        });
+    </script>
+</body>
+</html>
