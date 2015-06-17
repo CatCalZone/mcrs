@@ -1,1 +1,13 @@
 script: ./applications/buildAll.sh clean build
+
+addons:
+  artifacts: true
+  paths:
+    - applications/supportingServices/discoveryService
+    - applications/supportingServices/mcrs-config
+    - applications/supportingServices/edgeService
+    - applications/appointmentGateway
+    - applications/theProducer
+    - applications/appointmentRequestScheduler
+    - applications/statusService
+  debug: true

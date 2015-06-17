@@ -1,6 +1,11 @@
 variable "access_key" {}
 variable "secret_key" {}
 
+resource "aws_s3_bucket" "core_builds" {
+    bucket = "corebuilds"
+    acl = "private"
+}
+
 provider "aws" {
     access_key = "${var.access_key}"
     secret_key = "${var.secret_key}"
@@ -19,7 +24,7 @@ resource "aws_instance" "core" {
 
     connection {
         user = "ubuntu"
-        key_file = "deployer" 
+        key_file = "deployer"
     }
 
     provisioner "remote-exec" {
