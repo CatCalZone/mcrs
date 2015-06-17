@@ -1,6 +1,9 @@
 env:
   - TERM=dumb
 
+jdk:
+  - oraclejdk8
+
 script: ./applications/buildAll.sh clean build --debug
 
 addons:
