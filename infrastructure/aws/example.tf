@@ -4,6 +4,7 @@ variable "secret_key" {}
 resource "aws_s3_bucket" "core_builds" {
     bucket = "corebuilds"
     acl = "private"
+    region = "eu-west-1"
 }
 
 provider "aws" {

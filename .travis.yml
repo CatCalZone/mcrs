@@ -7,7 +7,7 @@ jdk:
 script: ./applications/buildAll.sh clean build
 
 addons:
-  artifacts: true
+  artifacts: false
   paths:
     - applications/supportingServices/discoveryService/build/libs
     - applications/supportingServices/mcrs-config/build/libs
