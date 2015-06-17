@@ -9,14 +9,14 @@ script: ./applications/buildAll.sh clean build
 addons:
   artifacts: true
   paths:
-    - applications/supportingServices/discoveryService
-    - applications/supportingServices/mcrs-config
-    - applications/supportingServices/edgeService
-    - applications/appointmentGateway
-    - applications/theProducer
-    - applications/appointmentRequestScheduler
-    - applications/statusService
+    - applications/supportingServices/discoveryService/build/libs
+    - applications/supportingServices/mcrs-config/build/libs
+    - applications/supportingServices/edgeService/build/libs
+    - applications/appointmentGateway/build/libs
+    - applications/theProducer/build/libs
+    - applications/appointmentRequestScheduler/build/libs
+    - applications/statusService/build/libs
   debug: true
-  
+
 notifications:
   slack: zuehlke:kDdWfWR1yjyNvVJeAVkrasHn
