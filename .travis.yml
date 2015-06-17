@@ -17,3 +17,6 @@ addons:
     - applications/appointmentRequestScheduler
     - applications/statusService
   debug: true
+  
+notifications:
+  slack: zuehlke:kDdWfWR1yjyNvVJeAVkrasHn
