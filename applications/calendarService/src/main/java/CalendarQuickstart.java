@@ -14,9 +14,11 @@ import com.google.api.services.calendar.Calendar.Freebusy;
 import com.google.api.services.calendar.CalendarScopes;
 import com.google.api.services.calendar.model.*;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.security.GeneralSecurityException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -66,7 +68,7 @@ public class CalendarQuickstart {
     public static Credential authorize() throws IOException {
         // Load client secrets.
         InputStream in =
-            CalendarQuickstart.class.getResourceAsStream("/client_secret.json");
+            CalendarQuickstart.class.getResourceAsStream("/secrets/client_secret.json");
         GoogleClientSecrets clientSecrets =
             GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
 
@@ -83,14 +85,29 @@ public class CalendarQuickstart {
                 "Credentials saved to " + DATA_STORE_DIR.getAbsolutePath());
         return credential;
     }
+    
+    public static Credential authorizeApp() throws IOException, GeneralSecurityException{
+    	String emailAddress = "401587662556-q8ehf0j5kmd9j79em0v5nr0phk3jb0qa@developer.gserviceaccount.com";
+    	JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
+    	HttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
+    	GoogleCredential credential = new GoogleCredential.Builder()
+    	    .setTransport(httpTransport)
+    	    .setJsonFactory(JSON_FACTORY)
+    	    .setServiceAccountId(emailAddress)
+    	    .setServiceAccountPrivateKeyFromP12File(new File("src/main/resources/secrets/service_account_secret.p12"))
+    	    .setServiceAccountScopes(SCOPES)
+    	    .build();
+    	return credential;
+    }
 
     /**
      * Build and return an authorized Calendar client service.
      * @return an authorized Calendar client service
      * @throws IOException
+     * @throws GeneralSecurityException 
      */
     public static com.google.api.services.calendar.Calendar
-        getCalendarService() throws IOException {
+        getCalendarService() throws IOException, GeneralSecurityException {
         Credential credential = authorize();
         return new com.google.api.services.calendar.Calendar.Builder(
                 HTTP_TRANSPORT, JSON_FACTORY, credential)
@@ -98,7 +115,7 @@ public class CalendarQuickstart {
                 .build();
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         // Build a new authorized API client service.
         // Note: Do not confuse this class with the
         //   com.google.api.services.calendar.model.Calendar class.
@@ -110,7 +127,7 @@ public class CalendarQuickstart {
         req.setTimeMax(new DateTime(System.currentTimeMillis()+TWO_MONTHS));
         FreeBusyRequestItem it = new FreeBusyRequestItem();
         it.setId("nnblqc60ned749hnpg3naebleg@group.calendar.google.com");
-        req.setItems(Collections.singletonList(it));
+        req.setItems(Arrays.asList(it));
         FreeBusyResponse res = service.freebusy().query(req).execute();
         
         for(Entry<String, FreeBusyCalendar> cal : res.getCalendars().entrySet()){
