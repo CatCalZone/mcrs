@@ -2,6 +2,7 @@ package com.zuehlke.mcrs.gateway;
 
 import com.fasterxml.classmate.TypeResolver;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.base.Predicate;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
@@ -26,8 +27,11 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.time.LocalDate;
+import static springfox.documentation.builders.PathSelectors.*;
+import static com.google.common.base.Predicates.*;
 
 import static com.google.common.collect.Lists.newArrayList;
+import static springfox.documentation.builders.PathSelectors.regex;
 import static springfox.documentation.schema.AlternateTypeRules.newRule;
 
 /**
@@ -73,31 +77,18 @@ public class ContextConfig extends WebMvcConfigurerAdapter {
     private TypeResolver typeResolver;
 
     @Bean
-    public Docket petApi() {
+    public Docket appointmentGatewayApi() {
+        // after build and bootRun, swagger spec is available by default at <host:port>/swagger-ui.html
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .apis(RequestHandlerSelectors.any())
-                .paths(PathSelectors.any())
+                .paths(apiRelevantPaths())
                 .build()
-                .pathMapping("/")
-                .directModelSubstitute(LocalDate.class,
-                        String.class)
-                .genericModelSubstitutes(ResponseEntity.class)
-                .alternateTypeRules(
-                        newRule(typeResolver.resolve(DeferredResult.class,
-                                        typeResolver.resolve(ResponseEntity.class, WildcardType.class)),
-                                typeResolver.resolve(WildcardType.class)))
-                .useDefaultResponseMessages(false)
-                .globalResponseMessage(RequestMethod.GET,
-                        newArrayList(new ResponseMessageBuilder()
-                                .code(500)
-                                .message("500 message")
-                                .responseModel(new ModelRef("Error"))
-                                .build()))
-
-                ;
+                .directModelSubstitute(LocalDate.class, String.class)
+                .useDefaultResponseMessages(false);
     }
 
-
-
+    private Predicate<String> apiRelevantPaths() {
+        return or(regex("/appointmentRequest.*"), regex("/ping.*"));
+    }
 }
