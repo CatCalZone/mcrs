@@ -14,28 +14,27 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
-/**
- * Created by dea on 17.04.15.
- */
-@Api(value = "appointmentRequest", description = "Takes new appointement requests ")
+import java.util.Date;
+
+import static org.springframework.http.MediaType.APPLICATION_JSON;
+
+@Api(description = "Endpoint for appointment requests")
 @RestController
-@RequestMapping("/appointmentRequest")
 public class AppointmentRequestController {
 
     @Autowired
     private AppointmentRequestService service;
 
-    @ApiOperation("a ping method to check if the controller is live")
-    @RequestMapping(method = RequestMethod.GET, produces = MediaType.TEXT_PLAIN_VALUE)
+    @ApiOperation("ping to check if controller is live")
+    @RequestMapping(value="/ping", method = RequestMethod.GET, produces = MediaType.TEXT_PLAIN_VALUE)
     public String ping(HttpServletResponse response) {
-        return "ping from appointment gateway";
+        return "ping sent from appointment gateway: " + new Date().toString();
     }
 
-    @ApiOperation("Create a new appointment request")
-    @RequestMapping(method = RequestMethod.POST)
-    public AppointmentRequest createAppointmentRequest(@ApiParam(value = "the appointment request which should be created") @RequestBody @Valid final AppointmentRequest request) {
+    @ApiOperation("create new appointment request")
+    @RequestMapping(value = "/appointmentRequest", method = RequestMethod.POST)
+    public AppointmentRequest createAppointmentRequest(@ApiParam(value = "the appointment request which should be created")
+                                                           @RequestBody @Valid final AppointmentRequest request) {
         return service.createAppointmentRequest(request);
     }
-
-
 }
