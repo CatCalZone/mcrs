@@ -32,7 +32,7 @@ resource "aws_instance" "example" {
     key_name ="${var.ssh_key_name}"
     security_groups = ["${aws_security_group.rabbitMq.name}"]
     tags {
-        Name = "theRabbit"
+        Name = "CatCalZone"
         Group = "MCRS"
     }
    
