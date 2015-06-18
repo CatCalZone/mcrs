@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.zuehlke.catcalzone.calendarservice.model.Block;
 import com.zuehlke.catcalzone.calendarservice.model.BlocksRequest;
 import com.zuehlke.catcalzone.calendarservice.model.CalendarBlocks;
+import com.zuehlke.catcalzone.calendarservice.model.InvitationRequest;
 
 @Log
 @RestController
@@ -49,21 +50,9 @@ public class CalendarService {
     	return Response.ok().entity(response).build();
     }
 
-    @GET
-    @Path("/test")
-    public Response Test(){
-    	List<CalendarBlocks> result = new ArrayList<CalendarBlocks>();
-    	result.add(new CalendarBlocks("test", Arrays.asList(
-    			new Block(LocalDateTime.now().plusDays(1), LocalDateTime.now().plusDays(1).plusHours(1)), 
-    			new Block(LocalDateTime.now().plusDays(2).minusHours(2), LocalDateTime.now().plusDays(2)))
-    		));    		
-    	GenericEntity<List<CalendarBlocks>> response = new GenericEntity<List<CalendarBlocks>>(result){};
-    	return Response.ok().entity(response).build();
+    @POST
+    @Path("invitation")
+    public Response order(InvitationRequest request){
+    	return null;
     }
-
-//    @POST
-//    @Path("invitation")
-//    public Response order(InvitationRequest request){
-//    	return null;
-//    }
 }

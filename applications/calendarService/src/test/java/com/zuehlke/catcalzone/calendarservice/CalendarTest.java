@@ -9,18 +9,23 @@ import java.util.Map;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.ext.ContextResolver;
+import javax.ws.rs.ext.Provider;
 
 import org.apache.cxf.endpoint.Server;
 import org.apache.cxf.jaxrs.JAXRSServerFactoryBean;
 import org.apache.cxf.jaxrs.client.WebClient;
 import org.apache.cxf.jaxrs.lifecycle.SingletonResourceProvider;
 import org.apache.cxf.transport.local.LocalConduit;
-import org.eclipse.persistence.jaxb.rs.MOXyJsonProvider;
 import org.junit.Test;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.AfterClass;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JSR310Module;
+import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
 import com.zuehlke.catcalzone.calendarservice.model.Block;
 import com.zuehlke.catcalzone.calendarservice.model.BlocksRequest;
 import com.zuehlke.catcalzone.calendarservice.model.CalendarBlocks;
@@ -30,6 +35,21 @@ public class CalendarTest extends Assert {
 	private final static String ENDPOINT_ADDRESS = "local://books";
 	private static Server server;
 
+	@Provider
+	public static class ObjectMapperContextResolver implements ContextResolver<ObjectMapper> {  
+	    private final ObjectMapper MAPPER;
+
+	    public ObjectMapperContextResolver() {
+	        MAPPER = new ObjectMapper();
+	        MAPPER.registerModule(new JSR310Module());
+	        MAPPER.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
+	    }
+
+	    @Override
+	    public ObjectMapper getContext(Class<?> type) {
+	        return MAPPER;
+	    }  
+	}
 	@BeforeClass
 	public static void initialize() throws Exception {
 		startServer();
@@ -39,7 +59,7 @@ public class CalendarTest extends Assert {
 		JAXRSServerFactoryBean sf = new JAXRSServerFactoryBean();
 		sf.setResourceClasses(CalendarService.class);
 
-	     sf.setProviders(Collections.singletonList(new MOXyJsonProvider()));
+	    sf.setProviders(Arrays.asList(new JacksonJaxbJsonProvider(), new ObjectMapperContextResolver()));
 	     
 		sf.setResourceProvider(CalendarService.class, new SingletonResourceProvider(
 				new CalendarService(), true));
@@ -56,7 +76,7 @@ public class CalendarTest extends Assert {
 
 	@Test
 	public void testGetBlocks() {
-		WebClient client = WebClient.create(ENDPOINT_ADDRESS, Collections.singletonList(new MOXyJsonProvider()));
+		WebClient client = WebClient.create(ENDPOINT_ADDRESS, Arrays.asList(new JacksonJaxbJsonProvider(), new ObjectMapperContextResolver()));
 		WebClient.getConfig(client).getRequestContext()
 				.put(LocalConduit.DIRECT_DISPATCH, Boolean.TRUE);
 		client.accept(MediaType.APPLICATION_JSON);
