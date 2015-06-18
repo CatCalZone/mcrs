@@ -61,7 +61,7 @@ public class CalendarTest extends Assert {
 				.put(LocalConduit.DIRECT_DISPATCH, Boolean.TRUE);
 		client.accept(MediaType.APPLICATION_JSON);
 		client.type(MediaType.APPLICATION_JSON);
-		client.path("blocks");
+		client.path("/calendar/blocks");
 		
 		BlocksRequest req = new BlocksRequest();
 		req.setItems(Arrays.asList(new BlocksRequest.Calendar("x1"), new BlocksRequest.Calendar("x2")));

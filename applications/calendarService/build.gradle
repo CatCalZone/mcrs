@@ -1,12 +1,46 @@
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
-apply plugin: 'war'
-apply plugin: 'eclipse-wtp'
+apply plugin: 'spring-boot'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 version = '1.0'
+
+ext {
+    slf4jVersion = '1.7.10'
+    logbackVersion = '1.1.2'
+    springVersion = '4.1.6.RELEASE'
+    springBootVersion = '1.2.3.RELEASE'
+    cxfVersion = '3.1.1'
+    googleApiVersion = '1.20.0'
+}
+
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.4'
+}
+
+buildscript {
+    repositories {
+        maven { url "https://repo.spring.io/libs-snapshot" }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.1.10.RELEASE")
+        classpath("org.springframework:springloaded:1.2.3.RELEASE")
+    }
+}
+
+configurations.all {
+    resolutionStrategy {
+        eachDependency {
+            if (it.requested.group == 'org.apache.tomcat.embed') {
+                it.useVersion '8.0.20'
+            }
+        }
+    }
+    all*.exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+}
 
 repositories {
     mavenCentral()
@@ -19,21 +53,39 @@ jar {
     version =  '0.1.0'
 }
 
-test {
-}
-
 dependencies {
-    compile 'com.google.api-client:google-api-client:1.20.0'
-    compile 'com.google.oauth-client:google-oauth-client-jetty:1.20.0'
-    compile 'com.google.apis:google-api-services-calendar:v3-rev125-1.20.0'
-    compile 'javax.ejb:javax.ejb-api:3.2'
-    compile 'javax.ws.rs:javax.ws.rs-api:2.0.1' 
+
+    // Spring Boot
+//    compile("org.springframework.boot:spring-boot-starter:$springBootVersion")
+    compile("org.springframework.boot:spring-boot-starter-web:$springBootVersion")
+    compile("org.springframework.boot:spring-boot-starter-log4j:$springBootVersion")
+//    compile("org.springframework.boot:spring-boot-starter-actuator:$springBootVersion")
+//    compile("org.springframework.boot:spring-boot-starter-amqp:$springBootVersion")
+    compile("org.springframework.boot:spring-boot-starter-jersey:$springBootVersion"){
+    	exclude group: "org.glassfish.jersey.core"
+    	exclude group: "org.glassfish.jersey.ext"
+    	exclude group: "org.glassfish.jersey.containers"
+    	exclude group: "org.glassfish.jersey.media"	}
+
+    // Spring Framework
+    compile "org.springframework:spring-core:$springVersion",
+            "org.springframework:spring-beans:$springVersion",
+            "org.springframework:spring-context:$springVersion",
+            "org.springframework:spring-context-support:$springVersion",
+            "org.springframework:spring-tx:$springVersion"
+
+    compile "com.google.api-client:google-api-client:$googleApiVersion"
+    compile "com.google.oauth-client:google-oauth-client-jetty:$googleApiVersion"
+    compile "com.google.apis:google-api-services-calendar:v3-rev125-1.20.0"
+    compile "javax.ws.rs:javax.ws.rs-api:2.0.1" 
     compile "org.projectlombok:lombok:1.16.4"
-    compile "com.sun.jersey:jersey-json:2.18"
+    compile "org.glassfish.jersey.core:jersey-common:2.18"
+    compile "org.glassfish.jersey.core:jersey-server:2.18"
     compile "org.glassfish.jersey.media:jersey-media-moxy:2.18"
     
-    testCompile "org.apache.cxf:cxf-rt-transports-local:3.1.1"
-    testCompile "org.apache.cxf:cxf-rt-frontend-jaxrs:3.1.1"
+    compile "org.apache.cxf:cxf-rt-transports-local:$cxfVersion"
+    compile "org.apache.cxf:cxf-rt-frontend-jaxrs:$cxfVersion"
+    compile "org.apache.cxf:cxf-rt-rs-client:$cxfVersion"
+    
     testCompile "junit:junit:4.11"
-    testCompile "org.apache.cxf:cxf-rt-rs-client:3.1.1"
 }
