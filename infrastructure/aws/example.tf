@@ -1,12 +1,6 @@
 variable "access_key" {}
 variable "secret_key" {}
 
-resource "aws_s3_bucket" "core_builds" {
-    bucket = "corebuilds"
-    acl = "private"
-    region = "eu-west-1"
-}
-
 provider "aws" {
     access_key = "${var.access_key}"
     secret_key = "${var.secret_key}"
@@ -35,4 +29,12 @@ resource "aws_instance" "core" {
 
 resource "aws_eip" "core_ip" {
     instance = "${aws_instance.core.id}"
+}
+
+resource "aws_route53_record" "docker_route" {
+   zone_id = "Z356687A621L93"
+   name = "core.catcal.zone"
+   type = "A"
+   ttl = "300"
+   records = ["${aws_eip.core_ip.public_ip}"]
 }
