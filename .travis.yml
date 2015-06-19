@@ -1,1 +1,22 @@
+env:
+  - TERM=dumb
+
+jdk:
+  - oraclejdk8
+
 script: ./applications/buildAll.sh clean build
+
+addons:
+  artifacts: false
+  paths:
+    - applications/supportingServices/discoveryService/build/libs
+    - applications/supportingServices/mcrs-config/build/libs
+    - applications/supportingServices/edgeService/build/libs
+    - applications/appointmentGateway/build/libs
+    - applications/theProducer/build/libs
+    - applications/appointmentRequestScheduler/build/libs
+    - applications/statusService/build/libs
+  debug: true
+
+notifications:
+  slack: zuehlke:kDdWfWR1yjyNvVJeAVkrasHn
