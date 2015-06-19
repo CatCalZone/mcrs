@@ -23,6 +23,12 @@ import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
 import com.zuehlke.catcalzone.calendarservice.model.BlocksRequest;
 import com.zuehlke.catcalzone.calendarservice.model.CalendarBlocks;
 
+/**
+ * Test REST API using local endpoint, see
+ * https://cwiki.apache.org/confluence/display/CXF20DOC/JAXRS+Testing
+ * 
+ * @author mibo
+ */
 public class CalendarTest extends Assert {
 
 	private final static String ENDPOINT_ADDRESS = "local://books";

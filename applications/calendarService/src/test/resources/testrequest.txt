@@ -1,0 +1,1 @@
+curl -X POST --data '{"timeZone": "Europe/Berlin", "timeMin":"2015-07-18T11:30:17", "timeMax":"2015-08-22T11:30:17", "items": [{"id" : "nnblqc60ned749hnpg3naebleg@group.calendar.google.com"}, {"id":"de.german#holiday@group.v.calendar.google.com"}]}' --header "Content -Type:application/json" http://localhost:8080/calendar/blocks

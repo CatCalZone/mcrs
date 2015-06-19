@@ -10,6 +10,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * Represents a period in a calendar that is blocked by an appointment
+ * 
+ * @author mibo
+ */
 @XmlRootElement
 @Getter @Setter @NoArgsConstructor @ AllArgsConstructor
 public class Block {

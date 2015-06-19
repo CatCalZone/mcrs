@@ -7,6 +7,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JSR310Module;
 
+/**
+ * Configure Jackson so that it can serialize Java 8 date objects properly
+ * @author mibo
+ */
 @Provider
 public class DateResolver implements ContextResolver<ObjectMapper> {  
     private final ObjectMapper MAPPER;

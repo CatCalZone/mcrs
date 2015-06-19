@@ -32,6 +32,12 @@ import com.zuehlke.catcalzone.calendarservice.model.Block;
 import com.zuehlke.catcalzone.calendarservice.model.BlocksRequest;
 import com.zuehlke.catcalzone.calendarservice.model.CalendarBlocks;
 
+
+/**
+ * Implementation of Google calendar API authorization and access
+ * 
+ * @author mibo
+ */
 @Service
 public class CalendarService {
     private static final String APPLICATION_NAME = "CatCalZone";
@@ -47,7 +53,11 @@ public class CalendarService {
             System.exit(1);
         }
     }
-    
+
+    /**
+     * Perform authorization using a service account, 
+     * see https://developers.google.com/identity/protocols/OAuth2ServiceAccount
+     */
     private static Credential authorizeApp() throws IOException, GeneralSecurityException{
     	String emailAddress = "401587662556-q8ehf0j5kmd9j79em0v5nr0phk3jb0qa@developer.gserviceaccount.com";
     	JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
@@ -75,33 +85,53 @@ public class CalendarService {
             .setApplicationName(APPLICATION_NAME)
             .build();
     }
-    
+
+    /**
+     * Convert dates
+     * 
+     * @param dt Java 8 date object
+     * @param zone for dt
+     * @return Google API date object
+     */
     public static DateTime toGoogle(LocalDateTime dt, String zone){
     	return new DateTime(dt.atZone(ZoneId.of(zone)).toEpochSecond()*1000);
     }
+    
+    /**
+     * Convert dates
+     * 
+     * @param dt Google API date object
+     * @return Java 8 date object
+     */
     public static LocalDateTime fromGoogle(DateTime dt){
     	LocalDateTime ldt = LocalDateTime.ofEpochSecond(dt.getValue()/1000, 0, ZoneOffset.ofTotalSeconds(dt.getTimeZoneShift()*60));
     	return ldt;
     }
 
+    /**
+     * Get and convert data to and from calendar API
+     * 
+     * @param originalRequest
+     * @return calendar response converted to our format
+     * @throws Exception
+     */
     public List<CalendarBlocks> getBlocksFor(BlocksRequest originalRequest) throws Exception{
-        com.google.api.services.calendar.Calendar client =
-                getCalendarClient();
-        Log.info("calendars: " + originalRequest.getItems().size());
-        FreeBusyRequest req = new FreeBusyRequest();
-        req.setTimeMin(toGoogle(originalRequest.getTimeMin(), originalRequest.getTimeZone()));
-        req.setTimeMax(toGoogle(originalRequest.getTimeMax(), originalRequest.getTimeZone()));        
-        req.setTimeZone(originalRequest.getTimeZone());
-        req.setItems(
-        	originalRequest.getItems().stream()
-        		.map(cal -> { FreeBusyRequestItem it = new FreeBusyRequestItem(); it.setId(cal.getId()); return it; })
-        		.collect(Collectors.toList())
-        );
+        Log.debug("calendars: " + originalRequest.getItems().size());
         
-        FreeBusyResponse res = client.freebusy().query(req).execute();
-        
-        Log.info("blocks: " + res.getCalendars().size());
-        List<CalendarBlocks> data = new ArrayList<>();
+        com.google.api.services.calendar.Calendar client = getCalendarClient();
+        FreeBusyRequest req = toGoogle(originalRequest);
+        FreeBusyResponse res = client.freebusy().query(req).execute();        
+        Log.debug("blocks: " + res.getCalendars().values().stream().map(cal -> cal.getBusy().size()).collect(Collectors.toList()));
+        return fromGoogle(res);
+    }
+
+    /**
+     * Convert response
+     * @param res from Google
+     * @return ours
+     */
+	private List<CalendarBlocks> fromGoogle(FreeBusyResponse res) {
+		List<CalendarBlocks> data = new ArrayList<>();
         for(Entry<String, FreeBusyCalendar> entry : res.getCalendars().entrySet()){
         	CalendarBlocks cb = new CalendarBlocks();
         	cb.setCalendarId(entry.getKey());
@@ -111,7 +141,26 @@ public class CalendarService {
         	}
         	data.add(cb);
         }
-        return data;
-    }
+		return data;
+	}
+
+	/**
+	 * Convert request
+	 * 
+	 * @param originalRequest ours
+	 * @return Google format
+	 */
+	private FreeBusyRequest toGoogle(BlocksRequest originalRequest) {
+		FreeBusyRequest req = new FreeBusyRequest();
+        req.setTimeMin(toGoogle(originalRequest.getTimeMin(), originalRequest.getTimeZone()));
+        req.setTimeMax(toGoogle(originalRequest.getTimeMax(), originalRequest.getTimeZone()));        
+        req.setTimeZone(originalRequest.getTimeZone());
+        req.setItems(
+        	originalRequest.getItems().stream()
+        		.map(cal -> { FreeBusyRequestItem it = new FreeBusyRequestItem(); it.setId(cal.getId()); return it; })
+        		.collect(Collectors.toList())
+        );
+		return req;
+	}
 
 }

@@ -25,6 +25,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map.Entry;
 
+/**
+ * Example for for autorization of access to Google calendar API,
+ * taken from https://developers.google.com/google-apps/calendar/quickstart/java and expanded
+ * 
+ * @author mibo
+ */
 public class CalendarQuickstart {
     /** Application name. */
     private static final String APPLICATION_NAME =

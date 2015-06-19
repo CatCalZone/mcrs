@@ -9,11 +9,16 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * Application configuration for Spring Boot and Jersey (JAX-RS)
+ * 
+ * @author mibo
+ */
 @SpringBootApplication
 @Log
 public class CalendarApp {
     public static void main(String[] args) {
-    	log.warning("Starting CalendarApp");
+    	log.info("Starting CalendarApp");
         new SpringApplicationBuilder(CalendarApp.class).web(true).run(args);
     }
 
@@ -21,7 +26,7 @@ public class CalendarApp {
     @Configuration
     public static class JerseyConfig extends ResourceConfig {
         public JerseyConfig(){        	
-        	log.warning("Configuring Jersey");
+        	log.info("Configuring Jersey");
         	this.register(CalendarController.class);
         	this.register(DateResolver.class);
         }

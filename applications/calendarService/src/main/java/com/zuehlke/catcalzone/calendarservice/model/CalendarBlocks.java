@@ -10,9 +10,21 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * Information about blocked periods in a calendar
+ * 
+ * @author mibo
+ */
 @XmlRootElement
 @Getter @Setter @NoArgsConstructor @ AllArgsConstructor
 public class CalendarBlocks {
+	/**
+	 * ID of the calendar
+	 */
 	private String calendarId;
+	
+	/**
+	 * Blocked periods
+	 */
 	private List<Block> blocks;
 }

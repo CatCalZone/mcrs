@@ -9,6 +9,11 @@ import org.junit.Test;
 
 import com.google.api.client.util.DateTime;
 
+/**
+ * Test utility methods that convert dates
+ * 
+ * @author mibo
+ */
 public class ConvertTest {
 
 	@Test

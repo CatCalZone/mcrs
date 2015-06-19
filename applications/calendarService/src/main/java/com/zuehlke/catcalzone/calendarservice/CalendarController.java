@@ -26,6 +26,11 @@ import com.zuehlke.catcalzone.calendarservice.model.Block;
 import com.zuehlke.catcalzone.calendarservice.model.BlocksRequest;
 import com.zuehlke.catcalzone.calendarservice.model.CalendarBlocks;
 
+/**
+ * JAX-RS endpoint for access to Google Calendar API
+ * 
+ * @author mibo
+ */
 @Log
 @RestController
 @Path("/calendar")
@@ -35,12 +40,16 @@ import com.zuehlke.catcalzone.calendarservice.model.CalendarBlocks;
 public class CalendarController {
 
     public CalendarController() {	
-    	log.warning("Starting CalendarService");
+    	log.info("Starting CalendarService");
     }
     
     @Autowired
     private CalendarService service;
 
+    /**
+     * @param request time period and list of calendars
+     * @return all blocked periods for the given calendars in the given time
+     */
     @POST
     @Path("/blocks")
     public Response blocks(BlocksRequest request){
@@ -51,10 +60,13 @@ public class CalendarController {
 	    	return Response.ok().entity(response).build();
 		} catch (Exception e) {
 			log.log(Level.SEVERE, "error calling service", e);
-			return Response.serverError().entity(e.getMessage()).build();
+			return Response.serverError().entity("error calling service: " + e.getMessage()).build();
 		}
     }
 
+    /**
+     * JAX-RS test method that always gives 2 blocked periods for every calendar in the request
+     */
     @POST
     @Path("/testBlocksPing")
     public Response testPing(BlocksRequest request){
@@ -68,6 +80,9 @@ public class CalendarController {
     	return Response.ok().entity(response).build();
     }
 
+    /**
+     * Test method that gives a constant response
+     */
     @GET
     @Path("/testBlocks")
     public Response test(){
@@ -79,10 +94,4 @@ public class CalendarController {
     	GenericEntity<List<CalendarBlocks>> response = new GenericEntity<List<CalendarBlocks>>(result){};
     	return Response.ok().entity(response).build();
     }
-
-//    @POST
-//    @Path("invitation")
-//    public Response order(InvitationRequest request){
-//    	return null;
-//    }
 }
