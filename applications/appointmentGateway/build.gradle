@@ -1,5 +1,7 @@
 import com.bmuschko.gradle.docker.tasks.image.Dockerfile
 import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
+import com.bmuschko.gradle.docker.tasks.image.DockerPushImage
+import com.bmuschko.gradle.docker.DockerRegistryCredentials
 
 
 buildscript {
@@ -10,7 +12,7 @@ buildscript {
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:1.1.10.RELEASE")
-        classpath 'com.bmuschko:gradle-docker-plugin:2.6.7'
+        classpath("com.bmuschko:gradle-docker-plugin:2.6.8")
     }
 }
 
@@ -136,15 +138,29 @@ task copyJarFileToDocker(type: Copy) {
     //tag = 'test/myapp'
 }
 
-// TODO remove
 docker {
-    url = "$System.env.DOCKER_HOST"
+    def dockerURL = System.env.DOCKER_HOST
+    println "Using docker URL form DOCKER_HOST " + dockerURL
+    def m = dockerURL =~ /(\d+)\.(\d+)\.(\d+)\.(\d+):(\d+)/
+
+    url = 'https://' + m[0][0]
     certPath = new File(System.properties['user.home'], '.docker/machine/machines/default')
+}
+
+def groupName = 'mcrs'
+
+def getRegistryCredentials = {
+    def dockerRegistryCredentials = new DockerRegistryCredentials()
+    dockerRegistryCredentials.username = System.env.DOCKER_REGISTRY_USERNAME
+    dockerRegistryCredentials.email = System.env.DOCKER_REGISTRY_EMAIL
+    dockerRegistryCredentials.password = System.env.DOCKER_REGISTRY_PASSWORD
+    //dockerRegistryCredentials.url = System.env.DOCKER_REGISTRY_URL
+    dockerRegistryCredentials
 }
 
 task buildBaseImage(type: DockerBuildImage) {
     inputDir = file('build/docker/base/')
-    tag = 'catcalzone/appointmentgateway-base'
+    tag = "${groupName}/appointmentgateway-base"
 }
 
 copyJarFileToDocker.dependsOn build
@@ -161,7 +177,7 @@ task copyMockDockerFile(type: Copy) {
 
 task buildMockImage(type: DockerBuildImage) {
     inputDir = file('build/docker/mock/')
-    tag = 'catcalzone/appointmentgateway-mock'
+    tag = "${groupName}/appointmentgateway-mock"
 }
 
 buildMockImage.dependsOn buildBaseImage
@@ -175,7 +191,7 @@ task copyAWSDockerFile(type: Copy) {
 
 task buildAWSImage(type: DockerBuildImage) {
     inputDir = file('build/docker/aws/')
-    tag = 'catcalzone/appointmentgateway-aws'
+    tag = "${groupName}/appointmentgateway-aws"
 }
 
 buildAWSImage.dependsOn buildBaseImage
@@ -183,14 +199,25 @@ buildAWSImage.dependsOn copyAWSDockerFile
 
 task copyAWSMockDockerFile(type: Copy) {
     from 'src/main/docker/aws/'
-    into 'build/docker/aws/'
+    into 'build/docker/aws-mock/'
 }
 
 
 task buildAWSMockImage(type: DockerBuildImage) {
     inputDir = file('build/docker/aws-mock/')
-    tag = 'catcalzone/appointmentgateway-aws-mock'
+    tag = "${groupName}/appointmentgateway-aws-mock"
 }
 
 buildAWSMockImage.dependsOn buildBaseImage
 buildAWSMockImage.dependsOn copyAWSMockDockerFile
+
+
+
+task pushImage(type: DockerPushImage) {
+    imageName = "${groupName}/appointmentgateway-aws-mock"
+   // tag = "aderenbach/appointmentgateway-aws-mock"
+    registryCredentials = getRegistryCredentials()
+
+}
+
+//pushImage.dependsOn buildAWSMockImage

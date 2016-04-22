@@ -16,7 +16,8 @@ eureka:
 
 
 incomingAppointmentQueue: appointmentRequestQueue
-incomingAppointmentQueueHost: localhost
+incomingAppointmentQueueHost: localhost‚
+
 ---
 
 spring:

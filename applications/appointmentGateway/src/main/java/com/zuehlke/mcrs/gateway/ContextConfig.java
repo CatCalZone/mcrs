@@ -39,8 +39,8 @@ import static springfox.documentation.schema.AlternateTypeRules.newRule;
  */
 @Configuration
 @EnableAutoConfiguration
-//@EnableEurekaClient
-//@EnableSwagger2
+@EnableEurekaClient
+@EnableSwagger2
 @ComponentScan
 public class ContextConfig extends WebMvcConfigurerAdapter {
 
