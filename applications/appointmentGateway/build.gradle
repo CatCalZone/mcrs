@@ -1,8 +1,24 @@
+import com.bmuschko.gradle.docker.tasks.image.Dockerfile
+import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
+
+
+buildscript {
+    repositories {
+        mavenCentral()
+        maven { url "https://repo.spring.io/libs-snapshot" }
+        jcenter()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.1.10.RELEASE")
+        classpath 'com.bmuschko:gradle-docker-plugin:2.6.7'
+    }
+}
 
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'spring-boot'
+apply plugin: 'com.bmuschko.docker-remote-api'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -15,23 +31,14 @@ ext {
     springCloudVersion = '1.0.1.RELEASE'
     spockVersion = '0.7-groovy-2.0'
 
-  
+
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.4'
+    gradleVersion = '2.12'
 }
 
 
-buildscript {
-    repositories {
-        maven { url "https://repo.spring.io/libs-snapshot" }
-    }
-    dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.1.10.RELEASE")
-        //classpath 'org.springframework:springloaded:1.2.3.RELEASE'
-    }
-}
 
 
 configurations.all {
@@ -54,9 +61,13 @@ idea {
 }
 */
 
+/*processResources {
+    expand(project.properties)
+}*/
+
 jar {
     baseName = 'appointmentGateway'
-    version =  '0.1.0'
+    version = '0.1.0'
 }
 
 repositories {
@@ -109,3 +120,77 @@ dependencies {
     testCompile 'org.raml:raml-parser:0.8.11'
 }
 
+
+task copyBaseDockerFile(type: Copy) {
+    from 'src/main/docker/base/'
+    into 'build/docker/base/'
+}
+
+task copyJarFileToDocker(type: Copy) {
+    from 'build/libs/'
+    into 'build/docker/base/'
+    include '*.jar'
+
+    rename(/appointmentGateway-(.+)/, 'appointmentGateway.jar')
+    //inputDir = file('docker/myapp')
+    //tag = 'test/myapp'
+}
+
+// TODO remove
+docker {
+    url = "$System.env.DOCKER_HOST"
+    certPath = new File(System.properties['user.home'], '.docker/machine/machines/default')
+}
+
+task buildBaseImage(type: DockerBuildImage) {
+    inputDir = file('build/docker/base/')
+    tag = 'catcalzone/appointmentgateway-base'
+}
+
+copyJarFileToDocker.dependsOn build
+copyBaseDockerFile.dependsOn build
+buildBaseImage.dependsOn copyBaseDockerFile
+buildBaseImage.dependsOn copyJarFileToDocker
+
+
+task copyMockDockerFile(type: Copy) {
+    from 'src/main/docker/mock/'
+    into 'build/docker/mock/'
+}
+
+
+task buildMockImage(type: DockerBuildImage) {
+    inputDir = file('build/docker/mock/')
+    tag = 'catcalzone/appointmentgateway-mock'
+}
+
+buildMockImage.dependsOn buildBaseImage
+buildMockImage.dependsOn copyMockDockerFile
+
+task copyAWSDockerFile(type: Copy) {
+    from 'src/main/docker/aws/'
+    into 'build/docker/aws/'
+}
+
+
+task buildAWSImage(type: DockerBuildImage) {
+    inputDir = file('build/docker/aws/')
+    tag = 'catcalzone/appointmentgateway-aws'
+}
+
+buildAWSImage.dependsOn buildBaseImage
+buildAWSImage.dependsOn copyAWSDockerFile
+
+task copyAWSMockDockerFile(type: Copy) {
+    from 'src/main/docker/aws/'
+    into 'build/docker/aws/'
+}
+
+
+task buildAWSMockImage(type: DockerBuildImage) {
+    inputDir = file('build/docker/aws-mock/')
+    tag = 'catcalzone/appointmentgateway-aws-mock'
+}
+
+buildAWSMockImage.dependsOn buildBaseImage
+buildAWSMockImage.dependsOn copyAWSMockDockerFile

@@ -1,0 +1,2 @@
+FROM catcalzone/appointmentgateway-base
+ENV SPRING_PROFILES_ACTIVE mock

@@ -1,6 +1,5 @@
 info:
   component: Appointment Request Gateway
-
 server:
   port: 0
 eureka:
@@ -21,8 +20,9 @@ incomingAppointmentQueueHost: localhost
 ---
 
 spring:
-    profiles: docker
-
+    profiles: aws-docker
+server:
+    port: 8080
 eureka:
   client:
       serviceUrl:
