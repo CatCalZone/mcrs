@@ -1,8 +1,3 @@
-import com.bmuschko.gradle.docker.tasks.image.Dockerfile
-import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
-import com.bmuschko.gradle.docker.tasks.image.DockerPushImage
-import com.bmuschko.gradle.docker.DockerRegistryCredentials
-
 
 buildscript {
     repositories {
@@ -15,6 +10,12 @@ buildscript {
         classpath("com.bmuschko:gradle-docker-plugin:2.6.8")
     }
 }
+
+import com.bmuschko.gradle.docker.tasks.image.Dockerfile
+import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
+import com.bmuschko.gradle.docker.tasks.image.DockerPushImage
+import com.bmuschko.gradle.docker.DockerRegistryCredentials
+
 
 apply plugin: 'java'
 apply plugin: 'eclipse'
@@ -140,11 +141,15 @@ task copyJarFileToDocker(type: Copy) {
 
 docker {
     def dockerURL = System.env.DOCKER_HOST
-    println "Using docker URL form DOCKER_HOST " + dockerURL
-    def m = dockerURL =~ /(\d+)\.(\d+)\.(\d+)\.(\d+):(\d+)/
+    if (dockerURL) {
+        println "Using docker URL form DOCKER_HOST " + dockerURL
+        def m = dockerURL =~ /(\d+)\.(\d+)\.(\d+)\.(\d+):(\d+)/
 
-    url = 'https://' + m[0][0]
-    certPath = new File(System.properties['user.home'], '.docker/machine/machines/default')
+        url = 'https://' + m[0][0]
+        certPath = new File(System.properties['user.home'], '.docker/machine/machines/default')
+    } else {
+        println "No DOCKER_HOST set"
+    }
 }
 
 def groupName = 'mcrs'
@@ -215,7 +220,7 @@ buildAWSMockImage.dependsOn copyAWSMockDockerFile
 
 task pushImage(type: DockerPushImage) {
     imageName = "${groupName}/appointmentgateway-aws-mock"
-   // tag = "aderenbach/appointmentgateway-aws-mock"
+    // tag = "aderenbach/appointmentgateway-aws-mock"
     registryCredentials = getRegistryCredentials()
 
 }
