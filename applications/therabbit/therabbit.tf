@@ -1,8 +1,17 @@
-provider "aws" {
-    region = "eu-west-1"
+variable "aws_region" {
+  type = "string"
+  description = "The region in which the RabbitMQ service should run"
+  default = "eu-west-1"
 }
 
-variable "ecs_cluster" {}
+variable "ecs_cluster" {
+  type = "string"
+  description = "The cluster in which the RabbitMQ service will be run (must exist)"
+}
+
+provider "aws" {
+    region = "${var.aws_region}"
+}
 
 resource "aws_ecs_task_definition" "therabbit_taskdef" {
   family = "therabbit"
