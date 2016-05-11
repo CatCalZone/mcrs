@@ -16,6 +16,7 @@ applications[4]=theProducer
 applications[5]=appointmentRequestScheduler
 applications[6]=statusService
 applications[7]=calendarService
+applications[8]=therabbit
 
 for i in ${applications[@]}; do
      
