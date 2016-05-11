@@ -1,0 +1,11 @@
+[
+  {
+    "name": "therabbit",
+    "image": "rabbitmq:3",
+    "memory": 128,
+    "portMappings": [{
+      "hostPort": 5672,
+      "containerPort": 5672
+    }]
+  }
+]
