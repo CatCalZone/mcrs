@@ -152,7 +152,7 @@ docker {
     }
 }
 
-def groupName = 'mcrs'
+def groupName = 'catcalzone'
 
 def getRegistryCredentials = {
     def dockerRegistryCredentials = new DockerRegistryCredentials()
