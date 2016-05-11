@@ -1,0 +1,14 @@
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.12'
+}
+
+task infra(type:Exec) {
+    workingDir './infrastructure' 
+    environment TF_VAR_ecs_cluster: "catcalzone"
+    executable = 'terraform'
+    args = ['apply']
+}
+
+defaultTasks 'infra'
+
+
