@@ -5,7 +5,6 @@
   tasks:
     - name: Install git
       apt: name=git state=present
-    - name: Set username and email
 
 - name: Setup Terraform
   hosts: jenkins
@@ -17,10 +16,23 @@
       ignore_errors: True     # rc != 0 is okay, indicates program not existing
       command: which terraform
       register: which_result
-      changed_when: which_result != 0     # Show changed when terraform is missing
+      changed_when: which_result.rc != 0     # Show changed when terraform is missing
     - name: Download + Unpack Terraform
       unarchive: src=https://releases.hashicorp.com/terraform/0.6.15/terraform_0.6.15_linux_amd64.zip dest=/usr/local/bin copy=no
       when: which_result.rc != 0
+
+- name: Put AWS credentials on machine
+  hosts: jenkins
+  remote_user: jenkins
+  become: yes
+  tasks:
+    - name: Include encrypted credentials
+      include_vars: vars.yml
+    - name: Create .aws directory
+      file: path=/var/lib/jenkins/.aws state=directory
+    - name: Copy credentials
+      copy: content={{ aws_credential_file_content }} dest=/var/lib/jenkins/.aws/credentials
+
 
 - name: Setup Jenkins
   hosts: jenkins
