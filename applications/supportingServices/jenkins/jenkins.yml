@@ -11,6 +11,9 @@
   - name: Ensure Jenkins package is installed
     apt: name=jenkins state=present update_cache=yes
   - name: Read initial admin password
-    command: /bin/cat /var/lib/jenkins/secrets/initialAdminPassword
-    register: admin_pw
-  - debug: msg="Jenkins on {{inventory_hostname}} is done! Go to {{ansible_nodename}} and enter {{admin_pw.stdout_lines[0]}}"
+    command: /bin/bash -c 'cat /var/lib/jenkins/secrets/initialAdminPassword || echo "N/A"'
+    register: cat_result
+    changed_when: cat_result.stdout != "N/A"
+  - name: Print hostname (on initial-provisioning)
+    debug: msg="Jenkins on {{inventory_hostname}} is done! Go to {{ansible_nodename}} and enter {{admin_pw.stdout}}"
+    when: cat_result.stdout != "N/A"
