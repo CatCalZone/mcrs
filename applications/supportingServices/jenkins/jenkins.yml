@@ -1,7 +1,29 @@
----
+
+- name: Setup git
+  hosts: jenkins
+  become: yes
+  tasks:
+    - name: Install git
+      apt: name=git state=present
+    - name: Set username and email
+
+- name: Setup Terraform
+  hosts: jenkins
+  become: yes
+  tasks:
+    - name: Ensure unzip is installed
+      apt: name=unzip state=present
+    - name: Check for presence of terraform
+      ignore_errors: True     # rc != 0 is okay, indicates program not existing
+      command: which terraform
+      register: which_result
+      changed_when: which_result != 0     # Show changed when terraform is missing
+    - name: Download + Unpack Terraform
+      unarchive: src=https://releases.hashicorp.com/terraform/0.6.15/terraform_0.6.15_linux_amd64.zip dest=/usr/local/bin copy=no
+      when: which_result.rc != 0
+
 - name: Setup Jenkins
   hosts: jenkins
-  remote_user: root
   become: yes
   tasks:
   - name: Ensure Jenkins' key is added to apt
