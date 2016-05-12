@@ -1,0 +1,16 @@
+---
+- name: Jenkins
+  hosts: dajenkins
+  remote_user: root
+  become: yes
+  tasks:
+  - name: Ensure Jenkins' key is added to apt
+    apt_key: url=https://jenkins-ci.org/debian/jenkins-ci.org.key state=present
+  - name: Ensure Jenkins repo is added to apt
+    apt_repository: repo='deb http://pkg.jenkins-ci.org/debian binary/' state=present
+  - name: Ensure Jenkins package is installed
+    apt: name=jenkins state=present update_cache=yes
+  - name: Read initial admin password
+    command: /bin/cat /var/lib/jenkins/secrets/initialAdminPassword
+    register: admin_pw
+  - debug: msg="Jenkins on {{inventory_hostname}} is done! Go to {{ansible_nodename}} and enter {{admin_pw.stdout_lines[0]}}"
