@@ -150,22 +150,30 @@ docker {
     } else {
         println "No DOCKER_HOST set"
     }
+
 }
 
 def groupName = 'catcalzone'
+def registryUrl = ''
+
+
+if (System.env.AWS_DOCKER_REGISTRY_URL)  {
+    registryUrl = System.env.AWS_DOCKER_REGISTRY_URL + '/'
+}
+
 
 def getRegistryCredentials = {
     def dockerRegistryCredentials = new DockerRegistryCredentials()
     dockerRegistryCredentials.username = System.env.DOCKER_REGISTRY_USERNAME
     dockerRegistryCredentials.email = System.env.DOCKER_REGISTRY_EMAIL
     dockerRegistryCredentials.password = System.env.DOCKER_REGISTRY_PASSWORD
-    //dockerRegistryCredentials.url = System.env.DOCKER_REGISTRY_URL
+    dockerRegistryCredentials.url = System.env.DOCKER_REGISTRY_URL
     dockerRegistryCredentials
 }
 
 task buildBaseImage(type: DockerBuildImage) {
     inputDir = file('build/docker/base/')
-    tag = "${groupName}/appointmentgateway-base"
+    tag = "${registryUrl}${groupName}/appointmentgateway-base"
 }
 
 copyJarFileToDocker.dependsOn build
@@ -182,7 +190,7 @@ task copyMockDockerFile(type: Copy) {
 
 task buildMockImage(type: DockerBuildImage) {
     inputDir = file('build/docker/mock/')
-    tag = "${groupName}/appointmentgateway-mock"
+    tag = "${registryUrl}${groupName}/appointmentgateway-mock"
 }
 
 buildMockImage.dependsOn buildBaseImage
@@ -196,21 +204,21 @@ task copyAWSDockerFile(type: Copy) {
 
 task buildAWSImage(type: DockerBuildImage) {
     inputDir = file('build/docker/aws/')
-    tag = "${groupName}/appointmentgateway-aws"
+    tag = "${registryUrl}${groupName}/appointmentgateway-aws"
 }
 
 buildAWSImage.dependsOn buildBaseImage
 buildAWSImage.dependsOn copyAWSDockerFile
 
 task copyAWSMockDockerFile(type: Copy) {
-    from 'src/main/docker/aws/'
+    from 'src/main/docker/aws-mock/'
     into 'build/docker/aws-mock/'
 }
 
 
 task buildAWSMockImage(type: DockerBuildImage) {
     inputDir = file('build/docker/aws-mock/')
-    tag = "${groupName}/appointmentgateway-aws-mock"
+    tag = "${registryUrl}${groupName}/appointmentgateway-aws-mock"
 }
 
 buildAWSMockImage.dependsOn buildBaseImage
@@ -218,11 +226,17 @@ buildAWSMockImage.dependsOn copyAWSMockDockerFile
 
 
 
-task pushImage(type: DockerPushImage) {
-    imageName = "${groupName}/appointmentgateway-aws-mock"
-    // tag = "aderenbach/appointmentgateway-aws-mock"
+task pushMockImage(type: DockerPushImage) {
+    imageName = "${registryUrl}${groupName}/appointmentgateway-aws-mock"
+    registryCredentials = getRegistryCredentials()
+
+}
+pushMockImage.dependsOn buildAWSMockImage
+
+task pushAWSImage(type: DockerPushImage) {
+    imageName = "${registryUrl}${groupName}/appointmentgateway-aws"
     registryCredentials = getRegistryCredentials()
 
 }
 
-//pushImage.dependsOn buildAWSMockImage
+pushAWSImage.dependsOn buildAWSImage
