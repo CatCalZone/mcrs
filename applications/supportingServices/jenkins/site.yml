@@ -1,0 +1,5 @@
+- hosts: jenkins
+  remote_user: root
+  become: yes
+  roles:
+    - jenkins

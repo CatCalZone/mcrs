@@ -1,0 +1,13 @@
+- name: Ensure Jenkins' key is added to apt
+  apt_key: url=https://jenkins-ci.org/debian/jenkins-ci.org.key state=present
+- name: Ensure Jenkins repo is added to apt
+  apt_repository: repo='deb http://pkg.jenkins-ci.org/debian binary/' state=present
+- name: Ensure Jenkins package is installed
+  apt: name=jenkins state=present update_cache=yes
+- name: Read initial admin password
+  command: /bin/bash -c 'cat /var/lib/jenkins/secrets/initialAdminPassword || echo "N/A"'
+  register: cat_result    # Make result (including output, return code available as a variable)
+  changed_when: cat_result.stdout != "N/A"    # This step only says "changed" when it's an initial deployment
+- name: Print hostname (on initial-provisioning
+  debug: msg="Jenkins on {{inventory_hostname}} is done! Go to {{ansible_nodename}} and enter {{admin_pw.stdout}}"
+  when: cat_result.stdout != "N/A"    # Only print debug message on initial deployments - otherwise it's unneeded and the PW is "N/A"

@@ -1,0 +1,21 @@
+---
+- name: Install git
+  apt: name=git state=present
+
+- name: Ensure unzip is installed
+  apt: name=unzip state=present
+- name: Check for presence of terraform
+  ignore_errors: True     # rc != 0 is okay, indicates program not existing
+  command: which terraform
+  register: which_result
+  changed_when: which_result.rc != 0     # Show changed when terraform is missing
+- name: Download + Unpack Terraform
+  unarchive: src={{ terraform_url }} dest=/usr/local/bin copy=no
+  when: which_result.rc != 0
+
+- name: Include encrypted credentials
+  include_vars: credentials.yml
+- name: Create .aws directory
+  file: path=/var/lib/jenkins/.aws state=directory
+- name: Copy credentials
+  copy: content={{ aws_credential_file_content }} dest=/var/lib/jenkins/.aws/credentials
