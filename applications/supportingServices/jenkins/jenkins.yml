@@ -1,6 +1,6 @@
 ---
-- name: Jenkins
-  hosts: dajenkins
+- name: Setup Jenkins
+  hosts: jenkins
   remote_user: root
   become: yes
   tasks:

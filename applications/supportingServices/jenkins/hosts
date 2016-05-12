@@ -1,1 +1,2 @@
-dajenkins   ansible_host=54.229.190.93  ansible_user=ubuntu
+[jenkins]
+camp-jenkins   ansible_host=54.229.190.93  ansible_user=ubuntu
