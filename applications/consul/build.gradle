@@ -4,10 +4,9 @@ task wrapper(type: Wrapper) {
 
 task infra(type:Exec) {
     workingDir './infrastructure' 
-    environment TF_VAR_ecs_cluster: "catcalzone"
+    environment TF_VAR_ecs_cluster: "buildingArea"
     executable = 'terraform'
     args = ['apply']
 }
-
 
 

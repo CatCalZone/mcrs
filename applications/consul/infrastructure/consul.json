@@ -1,0 +1,20 @@
+[
+  {
+    "name": "consul",
+    "image": "progrium/consul",
+    "memory": 128,
+    "cpu": 512,
+    "portMappings": [{
+      "hostPort": 8400,
+      "containerPort": 8400
+    },{
+      "hostPort": 8500,
+      "containerPort": 8500
+    },{
+      "hostPort": 8600,
+      "containerPort": 53,
+      "protocol": "udp"
+    }],
+    "command": ["-server", "-bootstrap", "-ui-dir", "/ui"]
+  }
+]
