@@ -12,8 +12,8 @@
     apt: name=jenkins state=present update_cache=yes
   - name: Read initial admin password
     command: /bin/bash -c 'cat /var/lib/jenkins/secrets/initialAdminPassword || echo "N/A"'
-    register: cat_result
-    changed_when: cat_result.stdout != "N/A"
-  - name: Print hostname (on initial-provisioning)
+    register: cat_result    # Make result (including output, return code available as a variable)
+    changed_when: cat_result.stdout != "N/A"    # This step only says "changed" when it's an initial deployment
+  - name: Print hostname (on initial-provisioning
     debug: msg="Jenkins on {{inventory_hostname}} is done! Go to {{ansible_nodename}} and enter {{admin_pw.stdout}}"
-    when: cat_result.stdout != "N/A"
+    when: cat_result.stdout != "N/A"    # Only print debug message on initial deployments - otherwise it's unneeded and the PW is "N/A"
