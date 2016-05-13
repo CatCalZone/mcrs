@@ -17,3 +17,11 @@ job('RollingRabbitReleases') {
       }
     }
 }
+
+job('myPipeline') {
+  definition {
+    cps {
+      script('echo "Hello World!"')
+    }
+  }
+}
