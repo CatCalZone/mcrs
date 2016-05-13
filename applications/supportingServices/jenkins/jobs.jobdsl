@@ -1,0 +1,19 @@
+job('RollingRabbitReleases') {
+    scm {
+      git {
+        remote {
+        	github('CatCalZone/mcrs')
+        }
+        createTag(false)
+      }
+    }
+    triggers {
+        scm('H/10 * * * *')
+    }
+    steps {
+      gradle {
+        rootBuildScriptDir('applications/therabbit')
+        tasks('infra')
+      }
+    }
+}
