@@ -21,6 +21,7 @@ job('RollingRabbitReleases') {
 workflowJob('myPipeline') {
   definition {
     cps {
+      sandbox(true)
       script('echo "Hello World!"')
     }
   }
