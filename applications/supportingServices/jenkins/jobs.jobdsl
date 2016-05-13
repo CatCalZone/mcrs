@@ -18,7 +18,7 @@ job('RollingRabbitReleases') {
     }
 }
 
-job('myPipeline') {
+workflowJob('myPipeline') {
   definition {
     cps {
       script('echo "Hello World!"')
