@@ -22,10 +22,13 @@ workflowJob('myPipeline') {
   definition {
     cpsScm {
       scm {
-        remote {
-        	github('CatCalZone/mcrs')
+        git {
+          remote {
+            github('CatCalZone/mcrs')
+          }
+
+          createTag(false)
         }
-        createTag(false)
       }
       scriptPath('applications/appointmentGateway/Jenkinsfile')
     }
