@@ -20,9 +20,11 @@ job('RollingRabbitReleases') {
 
 workflowJob('myPipeline') {
   definition {
-    cps {
-      sandbox(true)
-      script('echo "Hello World!"')
+    cpsScm {
+      scm {
+        git('https://github.com/CatCalZone/mcrs')
+      }
+      scriptPath('applications/appointmentGateway/Jenkinsfile')
     }
   }
 }
